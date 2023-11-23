@@ -1,0 +1,17 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/classification/index.html",
+      "/posts/probability/index.html",
+      "/posts/outlier-detection/index.html",
+      "/posts/linregression/index.html",
+      "/posts/nlinregression/index.html",
+      "/posts/post-with-code/index.html"
+    ]
+  },
+  {
+    "listing": "/posts/index.html",
+    "items": []
+  }
+]

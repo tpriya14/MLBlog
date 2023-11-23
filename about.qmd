@@ -1,0 +1,28 @@
+---
+title: "About"
+comments: false
+image: profile1.jpg
+about:
+  template: trestles
+  links:
+    - icon: envelope
+      text: Email
+      href: mailto:tpriya@vt.edu
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/tspriya14
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/tahmina-sultana-priya-718492142/
+    - icon: github
+      text: Github
+      href: https://github.com/tpriya14    
+---
+
+::: {#hero-heading}
+Hi! My name is Tahmina, and I am from Bangladesh.
+
+I am a PhD student in the Computer Science department at [Virginia Tech](https://www.vt.edu/), where I am passionately delving into the fascinating realm of Artificial Intelligence in the context of digital health. This field holds immense promise for revolutionizing the healthcare sector, and my research is dedicated to contributing to this exciting area.
+
+The machine learning course holds significant importance in my academic journey as it equips me with the fundamental knowledge and concepts that are directly applicable to my ongoing research in the field of Artificial Intelligence and digital health. Understanding the intricacies of machine learning is not only a valuable asset for my academic pursuits but is also highly relevant to the core of my research work. It provides me with the necessary tools and insights to explore innovative ways in which machine learning can be leveraged to advance the frontiers of healthcare technology and contribute to the betterment of the healthcare sector.
+:::

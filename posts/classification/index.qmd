@@ -1,0 +1,370 @@
+---
+title: "Classification"
+author: "Tahmina Sultana"
+date: "2023-11-24"
+categories: [python, code, analysis]
+image: "img1.webp"
+jupyter: python3
+description: "Classification in Machine Learning involves the process of assigning predefined categories or labels to data points based on their features, enabling algorithms to learn and predict the class of new, unseen instances."
+---
+
+![Machine Learning Algorithms for Classification (src: <https://towardsdatascience.com/top-machine-learning-algorithms-for-classification-2197870ff501>)](img.webp){fig-alt="Machine Learning Algorithms for Classification (src: https://towardsdatascience.com/top-machine-learning-algorithms-for-classification-2197870ff501)"}
+
+**Contents:**
+
+-   Introduction to Classification.
+
+-   Different types of classification.
+
+-   Example of Linear Regression with [Heart Failure Prediction dataset](https://www.kaggle.com/code/ratndeepchavan/prediction-of-heart-failure/input?select=heart.csv).
+
+-   Data Visualization
+
+-   Data processing
+
+-   Model implementation
+
+-   Evaluation metrics implementation
+
+## Introduction to Classification
+
+In the dynamic world of machine learning, classification stands out as a pivotal concept, providing the ability to categorize and interpret data for a wide array of applications. Whether you're looking to filter spam emails, identify diseases from medical data, or recognize handwritten digits, classification algorithms are your go-to tools. In this blog post, we'll delve into what classification is in machine learning, its significance, and how it's transforming industries.
+
+## Defining Classification in Machine Learning
+
+At its core, classification is the process of recognizing, understanding, and grouping data into predefined categories or subgroups. It's like having a smart assistant that can look at a new piece of data and tell you which group it belongs to based on its characteristics. This task is accomplished through the analysis of historical data, which serves as a training ground for machine learning models.
+
+## The Power of Predefined Categories
+
+The magic of classification lies in these predefined categories. Think of them as labels, such as "spam" and "non-spam" for emails, "fraudulent" and "legitimate" for financial transactions, or "cat" and "dog" for image recognition. The ability to organize data into these categories enables decision-making, automation, and insights that would otherwise be impractical or impossible to achieve manually.
+
+## How Classification Works
+
+To perform classification, machine learning algorithms need to learn from data first. This "training" phase involves feeding the algorithm a labeled dataset, where each data point is associated with the category it belongs to. The algorithm then learns the patterns, relationships, and features that characterize each category.
+
+Once trained, the algorithm can classify new, unseen data by assessing its similarity to the patterns it has learned. It predicts the likelihood of the new data point falling into one of the predefined categories. This process is akin to your email provider recognizing whether an incoming email is spam or not based on past experiences.
+
+## Real-Life Applications
+
+Classification has found its way into countless real-world applications. From medical diagnoses to recommendation systems, here are a few examples:
+
+-   **Medical Diagnoses**: Doctors use machine learning models to predict whether a patient has a particular disease based on symptoms, medical history, and test results.
+
+-   **Recommendation Systems**: Companies like Netflix and Amazon employ classification to recommend movies or products to users based on their preferences and behavior.
+
+-   **Sentiment Analysis**: Social media platforms analyze posts to classify them as positive, negative, or neutral, providing valuable insights into public opinion.
+
+-   **Image Recognition**: In the field of computer vision, classification helps identify objects, animals, or handwritten text in images.
+
+### Popular Classification Algorithms:
+
+-   [Logistic Regression](https://monkeylearn.com/blog/classification-algorithms/#logistic-regression): Logistic regression is a widely used classification algorithm that models the probability of an input belonging to a particular category. It's simple, interpretable, and effective for binary and multiclass classification tasks.
+
+-   [Naive Bayes](https://monkeylearn.com/blog/classification-algorithms/#naive-bayes): Naive Bayes is a probabilistic classification algorithm based on Bayes' theorem. It's particularly suited for text classification tasks and spam email filtering, where it assumes independence between features.
+
+-   [K-Nearest Neighbors](https://monkeylearn.com/blog/classification-algorithms/#knn): K-NN is a straightforward yet powerful algorithm that classifies data points based on the majority class among their k-nearest neighbors. It's versatile and can be applied to various types of data, but the choice of k is crucial for its performance.
+
+-   [Decision Tree](https://monkeylearn.com/blog/classification-algorithms/#decision-tree): Decision tree classifiers make decisions by splitting data based on features, creating a tree-like structure of decisions. They are interpretable and can handle both categorical and numerical data, making them useful in many applications.
+
+-   [Support Vector Machines](https://monkeylearn.com/blog/classification-algorithms/#svm): SVMs are effective for both linear and nonlinear classification tasks. They work by finding the optimal hyperplane that maximizes the margin between classes, making them robust against overfitting and suitable for high-dimensional data.
+
+## Example: Heart Disease Prediction
+
+```{python}
+
+
+import pandas as pd 
+import numpy as np 
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+from sklearn.metrics import roc_curve, precision_recall_curve
+from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve, f1_score, accuracy_score
+from sklearn.metrics import make_scorer, precision_score, precision_recall_curve
+from sklearn.metrics import recall_score
+from sklearn.preprocessing import StandardScaler
+
+import warnings
+warnings.filterwarnings('ignore')
+
+
+
+```
+
+```{python}
+sns.set_theme(context='notebook',
+              style='white',
+              palette='deep',
+              font_scale=1.5,
+              color_codes=True,
+              rc=None)
+
+import matplotlib
+
+plt.rcParams['figure.figsize'] = (14,8) 
+plt.rcParams['figure.facecolor'] = '#F0F8FF'
+plt.rcParams['figure.titlesize'] = 'medium'
+plt.rcParams['figure.dpi'] = 100
+plt.rcParams['figure.edgecolor'] = 'green'
+plt.rcParams['figure.frameon'] = True
+
+plt.rcParams["figure.autolayout"] = True
+
+plt.rcParams['axes.facecolor'] = '#F5F5DC'
+plt.rcParams['axes.titlesize'] = 25   
+plt.rcParams["axes.titleweight"] = 'normal'
+plt.rcParams["axes.titlecolor"] = 'Olive'
+plt.rcParams['axes.edgecolor'] = 'pink'
+plt.rcParams["axes.linewidth"] = 2
+plt.rcParams["axes.grid"] = True
+plt.rcParams['axes.titlelocation'] = 'center' 
+plt.rcParams["axes.labelsize"] = 20
+plt.rcParams["axes.labelpad"] = 2
+plt.rcParams['axes.labelweight'] = 1
+plt.rcParams["axes.labelcolor"] = 'Olive'
+plt.rcParams["axes.axisbelow"] = False 
+plt.rcParams['axes.xmargin'] = .2
+plt.rcParams["axes.ymargin"] = .2
+
+
+plt.rcParams["xtick.bottom"] = True 
+plt.rcParams['xtick.color'] = '#A52A2A'
+plt.rcParams["ytick.left"] = True  
+plt.rcParams['ytick.color'] = '#A52A2A'
+
+plt.rcParams['axes.grid'] = True 
+plt.rcParams['grid.color'] = 'green'
+plt.rcParams['grid.linestyle'] = '--' 
+plt.rcParams['grid.linewidth'] = .5
+plt.rcParams['grid.alpha'] = .3       
+
+plt.rcParams['legend.loc'] = 'best' 
+plt.rcParams['legend.facecolor'] =  'NavajoWhite'  
+plt.rcParams['legend.edgecolor'] = 'pink'
+plt.rcParams['legend.shadow'] = True
+plt.rcParams['legend.fontsize'] = 20
+
+plt.rcParams['font.size'] = 14
+
+plt.rcParams['figure.dpi'] = 200
+plt.rcParams['figure.edgecolor'] = 'Blue'
+
+```
+
+```{python}
+pd.set_option('display.max_columns',None)
+pd.set_option('display.max_rows',None)
+pd.set_option("display.precision", 2)
+```
+
+```{python}
+heart1 = pd.read_csv('/home/tpriya/CS5525/MLBlog/posts/classification/heart.csv')
+heart1.head()
+```
+
+**Attributes:**
+
+-   **Age:** Age of the patient \[years\]
+
+-   **Sex:** Sex of the patient \[M: Male, F: Female\]
+
+-   **ChestPainType:** Chest Pain Type \[TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic\]
+
+-   **RestingBP:** Resting blood pressure \[mm Hg\]
+
+-   **Cholesterol:** Serum cholesterol \[mm/dl\]
+
+-   **FastingBS:** Fasting blood sugar \[1: if FastingBS \> 120 mg/dl, 0: otherwise\]
+
+-   **RestingECG**: Resting electrocardiogram results \[Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of \> 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria\]
+
+-   **MaxHR:** Maximum heart rate achieved \[Numeric value between 60 and 202\]
+
+-   **ExerciseAngina:** Exercise-induced angina \[Y: Yes, N: No\]
+
+-   **Oldpeak:** Oldpeak = ST \[Numeric value measured in depression\]
+
+-   **ST_Slope:** The slope of the peak exercise ST segment \[Up: upsloping, Flat: flat, Down: downsloping\]
+
+-   **HeartDisease:** Output class \[1: heart disease, 0: Normal\]
+
+```{python}
+heart1.info()
+```
+
+```{python}
+heart1.describe()
+```
+
+```{python}
+heart1.isnull().mean()*100
+```
+
+```{python}
+Women = heart1.loc[heart1['Sex'] == 'F']["HeartDisease"]
+rate_women = (Women.sum()/len(Women)).round(2)*100
+print("Percentage of Women with probability of HeartDisease:", rate_women,"%")
+
+Men = heart1.loc[heart1['Sex'] == 'M']["HeartDisease"]
+rate_men = (Men.sum()/len(Men)).round(2)*100
+print("Percentage of Men with probability of HeartDisease  :", rate_men,"%")
+```
+
+```{python}
+print(f'We have {heart1.shape[0]} instances with the {heart1.shape[1]-1} features and 1 output variable')
+```
+
+```{python}
+## Combining Data
+heart1.agg(
+    {
+       "Age": ["min", "max", "median","mean", "skew", 'std'],
+        "RestingBP": ["min", "max", "median", "mean","skew",'std'],
+        "Cholesterol": ["min", "max", "median", "mean","skew",'std'],
+        "Oldpeak": ["min", "max", "median", "mean","skew",'std'],
+        "MaxHR": ["min", "max", "median", "mean","skew",'std']
+    }
+)
+
+```
+
+```{python}
+sns.kdeplot( data=heart1, x="Cholesterol", hue="ChestPainType", fill=True, common_norm=False, palette="tab10", alpha=.5, linewidth=0);
+```
+
+```{python}
+sns.displot(data=heart1, x="Cholesterol", hue="ChestPainType", col="Sex", kind="kde");
+```
+
+```{python}
+heart1.nunique().plot(kind='bar')
+plt.title('No of unique values in the dataset')
+plt.show()
+```
+
+**Outliers in Data**
+
+Outliers represent atypical data points that have the potential to disrupt statistical analyses and challenge their underlying assumptions. Dealing with outliers is a common task for analysts, and deciding how to handle them can be a complex process. While the instinct may be to eliminate outliers to mitigate their impact, this approach is appropriate only in certain circumstances and should not be the default choice
+
+```{python}
+plt.figure(figsize=(14,20))
+plt.subplot(5,2,1)
+sns.distplot(heart1['Age'],color='DeepPink')
+plt.subplot(5,2,2)
+sns.boxplot(heart1['Age'],color='DeepPink')
+plt.subplot(5,2,3)
+sns.distplot(heart1['RestingBP'],color='DarkSlateGray')
+plt.subplot(5,2,4)
+sns.boxplot(heart1['RestingBP'],color='DarkSlateGray')
+plt.subplot(5,2,5)
+sns.distplot(heart1['Cholesterol'],color='Green')
+plt.subplot(5,2,6)
+sns.boxplot(heart1['Cholesterol'],color='Green')
+plt.subplot(5,2,7)
+sns.distplot(heart1['MaxHR'],color='Red')
+plt.subplot(5,2,8)
+sns.boxplot(heart1['MaxHR'],color='Red')
+plt.subplot(5,2,9)
+sns.distplot(heart1['Oldpeak'],color='Brown')
+plt.subplot(5,2,10)
+sns.boxplot(heart1['Oldpeak'],color='Brown')
+plt.tight_layout()
+plt.show()
+
+```
+
+```{python}
+#assigning values to features as X and target as y
+X=heart1.drop(["HeartDisease"],axis=1)
+y=heart1["HeartDisease"]
+
+#Set up a standard scaler for the features
+col_names = list(X.columns)
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+
+for col in X.columns:
+    if not pd.api.types.is_numeric_dtype(X[col]):
+        X[col] = le.fit_transform(X[col])
+        
+s_scaler = StandardScaler()
+X_df= s_scaler.fit_transform(X)
+X_df = pd.DataFrame(X_df, columns=col_names)   
+X_df.describe().T
+```
+
+```{python}
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test = train_test_split(X_df,y,test_size=0.2,random_state=21)
+```
+
+```{python}
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+X_train=scaler.fit_transform(X_train)
+X_test=scaler.transform(X_test)
+
+X_train = pd.DataFrame(X_train, columns=X.columns)
+X_test = pd.DataFrame(X_test, columns=X.columns)
+
+```
+
+### KNN Classifier
+
+```{python}
+from sklearn.neighbors import KNeighborsClassifier
+plt.rcParams['figure.figsize'] = (8,6)
+plt.rcParams['font.size'] = 20
+
+from sklearn.metrics import accuracy_score,confusion_matrix,classification_report,f1_score
+
+knn = KNeighborsClassifier()
+knn.fit(X_train, y_train)
+y_pred_log = knn.predict(X_test)
+
+log_train = round(knn.score(X_train, y_train) * 100, 2)
+log_accuracy = round(accuracy_score(y_pred_log, y_test) * 100, 2)
+log_f1 = round(f1_score(y_pred_log, y_test) * 100, 2)
+
+print("Training Accuracy    :",log_train,"%")
+print("Model Accuracy Score :",log_accuracy,"%")
+print("\033[1m--------------------------------------------------------\033[0m")
+print("Classification_Report: \n",classification_report(y_test,y_pred_log))
+
+
+```
+
+![Confusion Matrix (src: <https://www.datacamp.com/tutorial/precision-recall-curve-tutorial>)](pr1.png){fig-alt="Confusion Matrix"}
+
+```{python}
+confusion_matrix(y_test, y_pred_log);
+```
+
+```{python}
+knn_probs = knn.predict_proba(X_test)
+knn_probs = knn_probs[:, 1]
+from sklearn.metrics import roc_curve, roc_auc_score
+rf_auc = roc_auc_score(y_test, knn_probs)
+rf_fpr, rf_tpr, _ = roc_curve(y_test, knn_probs)
+```
+
+```{python}
+plt.figure(figsize=(12, 8))
+plt.plot(rf_fpr, rf_tpr, linestyle='--', label='AUC = %0.3f' % rf_auc)
+
+
+plt.title('ROC Plot')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.legend()  
+plt.show()
+
+```
+
+```{python}
+precision, recall, thresholds = precision_recall_curve(y_test, knn_probs)
+plt.fill_between(recall, precision)
+plt.ylabel("Precision")
+plt.xlabel("Recall")
+plt.title("Precision-Recall curve");
+```

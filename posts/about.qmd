@@ -1,0 +1,62 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/tspriya14
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/tahmina-sultana-priya-718492142/
+    - icon: github
+      text: Github
+      href: https://github.com/tpriya14
+---
+
+I am Tahmina Sultana Priya, a PhD student in the Computer Science department at Virginia Tech, where I am passionately delving into the fascinating realm of Artificial Intelligence in the context of digital health. This field holds immense promise for revolutionizing the healthcare sector, and my research is dedicated to contributing to this exciting area. I earned my undergraduate degree in Computer Science and Engineering from Khulna University of Engineering & Technology in Bangladesh in 2020, securing the 7th position among 120 students. Following my graduation, I took on a role as a lecturer at Daffodil International University, a private educational institution in Bangladesh. During my tenure as a faculty member, I had the privilege of teaching various courses such as Data Mining, Machine Learning, Artificial Intelligence, Introduction to Bioinformatics, and Big Data, which allowed me to share my knowledge and passion with the next generation of computer scientists. In addition to my academic responsibilities, I also worked as a part-time Senior DevOps Engineer for Vertical Innovations Limited, gaining practical experience in the field of DevOps. My journey in both academia and industry has provided me with a well-rounded foundation to pursue my current research interests in the fascinating intersection of AI and digital health. The machine learning course holds significant importance in my academic journey as it equips me with the fundamental knowledge and concepts that are directly applicable to my ongoing research in the field of Artificial Intelligence and digital health. Understanding the intricacies of machine learning is not only a valuable asset for my academic pursuits but is also highly relevant to the core of my research work. It provides me with the necessary tools and insights to explore innovative ways in which machine learning can be leveraged to advance the frontiers of healthcare technology and contribute to the betterment of the healthcare sector.
+
+```         
+---
+title: "Beatriz Milz"
+comments: false
+image: bea.jpg
+about:
+  template: trestles
+  links:
+    - icon: envelope
+      text: Email
+      href: mailto:milz.bea@gmail.com
+    - icon: file-pdf
+      text: Resume
+      href: https://beatrizmilz.github.io/resume/index.pdf  
+    - icon: github
+      text: GitHub
+      href: https://github.com/beatrizmilz
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/BeaMilz      
+---
+
+<center>
+
+::: {.btn-group role="group" aria-label="About"}
+<a href="about.html"> <button type="button" class="btn btn-primary me-md-2 btn-sm">English</button></a> <a href="about-pt.html"> <button type="button" class="btn btn-primary me-md-2 btn-sm">Português</button></a>   <a href="about-es.html"><button type="button" class="btn btn-primary me-md-2 btn-sm">Español</button></a>
+:::
+
+</center>
+
+::: {#hero-heading}
+Hi!
+My name is Beatriz, and I am a R-Lady from Brazil 🇧🇷 💜.
+
+I'm a [tidyverse instructor certified by RStudio](https://education.rstudio.com/trainers/people/milz+beatriz/), and I teach R at [Curso-R](https://curso-r.com/).
+
+I have been writing about R in my blog since 2019.
+I'm mostly active in the Brazilian R community, co-organizing communities and events, such as: [R-Ladies São Paulo](https://twitter.com/RLadiesSaoPaulo), [Latin-R](https://twitter.com/LatinR_Conf), and [satRday São Paulo](https://twitter.com/satRdaySP).
+
+I'm a PhD Candidate at the [University of São Paulo](http://www.iee.usp.br/), in Environmental Sciences.
+My research is about **transparency of information** in the **management of water resources** that are used to supply the Macrometropolis of Sao Paulo.
+:::
+```
