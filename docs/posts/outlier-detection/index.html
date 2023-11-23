@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tahmina Sultana Priya">
-<meta name="dcterms.date" content="2023-10-24">
+<meta name="author" content="Tahmina Sultana">
+<meta name="dcterms.date" content="2023-11-20">
 <meta name="description" content="Anomaly detection in Machine Learning focuses on identifying rare or unusual instances in data that significantly differ from the majority of normal observations, aiding in the detection of outliers or irregular patterns.">
 
 <title>MLBlog - Anomaly/Outlier detection</title>
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -62,6 +96,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -116,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">python</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -129,14 +166,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tahmina Sultana Priya </p>
+               <p>Tahmina Sultana </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 24, 2023</p>
+        <p class="date">November 20, 2023</p>
       </div>
     </div>
     
@@ -154,8 +191,1678 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="segment-1-introduction-to-probability" class="level2">
-<h2 class="anchored" data-anchor-id="segment-1-introduction-to-probability">Segment 1: Introduction to Probability</h2>
+<p><strong>Contents:</strong></p>
+<ul>
+<li><p>Introduction to Anomaly or Outlier Detection.</p></li>
+<li><p>Example of Anomaly or Outlier Detection manually created data.</p></li>
+<li><p>Example of Anomaly or Outlier Detection with real data <a href="https://www.kaggle.com/datasets/hebaabdelhakam/credit-card">Credit Card</a> <a href="https://www.kaggle.com/datasets/hebaabdelhakam/credit-card">dataset</a>.</p></li>
+<li><p>Data Visualization</p></li>
+<li><p>Data processing</p></li>
+<li><p>Anomaly Detection</p></li>
+<li><p>Clustering Model implementation</p></li>
+<li><p>Evaluation metrics implementation</p></li>
+</ul>
+<section id="anomaly-or-outlier-detection" class="level4">
+<h4 class="anchored" data-anchor-id="anomaly-or-outlier-detection"><strong>Anomaly or Outlier Detection</strong></h4>
+<p>Anomaly Detection involves identifying uncommon occurrences within a dataset that stand out as statistically different from the majority of observations. These anomalies often indicate potential problems such as credit card fraud, server malfunctions, or cyber attacks.</p>
+<p>Anomalies fall into three primary categories:</p>
+<ul>
+<li><p><strong>Point Anomaly:</strong> This occurs when a data point significantly deviates from the rest of the dataset.</p></li>
+<li><p><strong>Contextual Anomaly:</strong> An observation is flagged as a Contextual Anomaly due to its abnormality within a specific context.</p></li>
+<li><p><strong>Collective Anomaly:</strong> This involves a group of data instances that collectively indicate an anomaly.</p></li>
+</ul>
+<p>Machine Learning concepts are employed to perform anomaly detection using various approaches:</p>
+<ul>
+<li><p><strong>Supervised Anomaly Detection:</strong> This method relies on labeled datasets containing both normal and anomalous samples. Predictive models, such as supervised Neural Networks, Support Vector Machines, or K-Nearest Neighbors Classifiers, are utilized to classify future data points.</p></li>
+<li><p><strong>Unsupervised Anomaly Detection:</strong> This approach doesn’t require labeled training data. It operates on the assumptions that only a small fraction of the data is anomalous and that anomalies significantly differ from normal samples. Unsupervised methods cluster data based on similarity measures, identifying data points that fall far from the established clusters as anomalies.</p></li>
+</ul>
+<p><strong>Anomaly Detection with manually generated data:</strong></p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.font_manager </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.models.knn <span class="im">import</span> KNN  </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyod.utils.data <span class="im">import</span> generate_data, get_outliers_inliers </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generating a random dataset with two features </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> generate_data(n_train <span class="op">=</span> <span class="dv">300</span>, train_only <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                                   n_features <span class="op">=</span> <span class="dv">2</span>) </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the percentage of outliers </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>outlier_fraction <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Storing the outliers and inliners in different numpy arrays </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>X_outliers, X_inliers <span class="op">=</span> get_outliers_inliers(X_train, y_train) </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>n_inliers <span class="op">=</span> <span class="bu">len</span>(X_inliers) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>n_outliers <span class="op">=</span> <span class="bu">len</span>(X_outliers) </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Separating the two features </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> X_train[:, [<span class="dv">0</span>]].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> X_train[:, [<span class="dv">1</span>]].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>xx, yy <span class="op">=</span> np.meshgrid(np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">200</span>), </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                     np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">200</span>)) </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># scatter plot </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(f1, f2) </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Feature 1'</span>) </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Feature 2'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>Text(0, 0.5, 'Feature 2')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-4-output-2.png" width="587" height="429"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> KNN(contamination <span class="op">=</span> outlier_fraction) </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train) </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># You can print this to see all the prediction scores </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>scores_pred <span class="op">=</span> clf.decision_function(X_train)<span class="op">*-</span><span class="dv">1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> clf.predict(X_train) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>n_errors <span class="op">=</span> (y_pred <span class="op">!=</span> y_train).<span class="bu">sum</span>() </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Counting the number of errors </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'The number of prediction errors are '</span> <span class="op">+</span> <span class="bu">str</span>(n_errors)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The number of prediction errors are 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/tpriya/CS5525/MLBlog/env/lib/python3.10/site-packages/pyod/models/base.py:430: UserWarning: y should not be presented in unsupervised learning.
+  warnings.warn(</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> stats.scoreatpercentile(scores_pred, <span class="dv">100</span> <span class="op">*</span> outlier_fraction) </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># decision function calculates the raw  </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># anomaly score for every point </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> clf.decision_function(np.c_[xx.ravel(), yy.ravel()]) <span class="op">*</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> Z.reshape(xx.shape) </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fill blue colormap from minimum anomaly </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># score to threshold value </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>subplot <span class="op">=</span> plt.subplot(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>) </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>subplot.contourf(xx, yy, Z, levels <span class="op">=</span> np.linspace(Z.<span class="bu">min</span>(),  </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                  threshold, <span class="dv">10</span>), cmap <span class="op">=</span> plt.cm.Blues_r) </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># draw red contour line where anomaly  </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># score is equal to threshold </span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> subplot.contour(xx, yy, Z, levels <span class="op">=</span>[threshold], </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                     linewidths <span class="op">=</span> <span class="dv">2</span>, colors <span class="op">=</span><span class="st">'red'</span>) </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># fill orange contour lines where range of anomaly </span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># score is from threshold to maximum anomaly score </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>subplot.contourf(xx, yy, Z, levels <span class="op">=</span>[threshold, Z.<span class="bu">max</span>()], colors <span class="op">=</span><span class="st">'orange'</span>) </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># scatter plot of inliers with white dots </span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> subplot.scatter(X_train[:<span class="op">-</span>n_outliers, <span class="dv">0</span>], X_train[:<span class="op">-</span>n_outliers, <span class="dv">1</span>], </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>                                    c <span class="op">=</span><span class="st">'white'</span>, s <span class="op">=</span> <span class="dv">20</span>, edgecolor <span class="op">=</span><span class="st">'k'</span>)  </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co"># scatter plot of outliers with black dots </span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> subplot.scatter(X_train[<span class="op">-</span>n_outliers:, <span class="dv">0</span>], X_train[<span class="op">-</span>n_outliers:, <span class="dv">1</span>],  </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>                                    c <span class="op">=</span><span class="st">'black'</span>, s <span class="op">=</span> <span class="dv">20</span>, edgecolor <span class="op">=</span><span class="st">'k'</span>) </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>subplot.axis(<span class="st">'tight'</span>) </span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>subplot.legend( </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    [a.collections[<span class="dv">0</span>], b, c], </span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'learned decision function'</span>, <span class="st">'true inliers'</span>, <span class="st">'true outliers'</span>], </span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    prop <span class="op">=</span> matplotlib.font_manager.FontProperties(size <span class="op">=</span> <span class="dv">10</span>), </span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    loc <span class="op">=</span><span class="st">'lower right'</span>) </span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>subplot.set_title(<span class="st">'K-Nearest Neighbours'</span>) </span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>subplot.set_xlim((<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>)) </span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>subplot.set_ylim((<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>)) </span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>plt.show()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_22759/1166639198.py:33: MatplotlibDeprecationWarning: The collections attribute was deprecated in Matplotlib 3.8 and will be removed two minor releases later.
+  [a.collections[0], b, c],</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-6-output-2.png" width="314" height="431"></p>
+</div>
+</div>
+<p><strong>Anomaly Detection with real data:</strong></p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> NearestNeighbors</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/outlier-detection/CC GENERAL.csv'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'The shape of the dataset is:'</span>, df.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The shape of the dataset is: (8950, 18)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check number of nulls in each column </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.isnull().<span class="bu">sum</span>().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># konw the ratio of null in each column </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">round</span>(df.isnull().<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>)<span class="op">*</span><span class="dv">100</span><span class="op">/</span>df.shape[<span class="dv">0</span>],<span class="dv">2</span>).sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>MINIMUM_PAYMENTS                    3.50
+CREDIT_LIMIT                        0.01
+CUST_ID                             0.00
+BALANCE                             0.00
+PRC_FULL_PAYMENT                    0.00
+PAYMENTS                            0.00
+PURCHASES_TRX                       0.00
+CASH_ADVANCE_TRX                    0.00
+CASH_ADVANCE_FREQUENCY              0.00
+PURCHASES_INSTALLMENTS_FREQUENCY    0.00
+ONEOFF_PURCHASES_FREQUENCY          0.00
+PURCHASES_FREQUENCY                 0.00
+CASH_ADVANCE                        0.00
+INSTALLMENTS_PURCHASES              0.00
+ONEOFF_PURCHASES                    0.00
+PURCHASES                           0.00
+BALANCE_FREQUENCY                   0.00
+TENURE                              0.00
+dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save numeric columns and objects in separeted list to handle each one of them</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>numeric_columns <span class="op">=</span> df.select_dtypes(exclude<span class="op">=</span>[<span class="st">'object'</span>]).columns.to_list() </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>object_columns <span class="op">=</span> df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns.to_list()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df[numeric_columns].hist(bins<span class="op">=</span><span class="dv">15</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>array([[&lt;Axes: title={'center': 'BALANCE'}&gt;,
+        &lt;Axes: title={'center': 'BALANCE_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'PURCHASES'}&gt;,
+        &lt;Axes: title={'center': 'ONEOFF_PURCHASES'}&gt;],
+       [&lt;Axes: title={'center': 'INSTALLMENTS_PURCHASES'}&gt;,
+        &lt;Axes: title={'center': 'CASH_ADVANCE'}&gt;,
+        &lt;Axes: title={'center': 'PURCHASES_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'ONEOFF_PURCHASES_FREQUENCY'}&gt;],
+       [&lt;Axes: title={'center': 'PURCHASES_INSTALLMENTS_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'CASH_ADVANCE_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'CASH_ADVANCE_TRX'}&gt;,
+        &lt;Axes: title={'center': 'PURCHASES_TRX'}&gt;],
+       [&lt;Axes: title={'center': 'CREDIT_LIMIT'}&gt;,
+        &lt;Axes: title={'center': 'PAYMENTS'}&gt;,
+        &lt;Axes: title={'center': 'MINIMUM_PAYMENTS'}&gt;,
+        &lt;Axes: title={'center': 'PRC_FULL_PAYMENT'}&gt;],
+       [&lt;Axes: title={'center': 'TENURE'}&gt;, &lt;Axes: &gt;, &lt;Axes: &gt;, &lt;Axes: &gt;]],
+      dtype=object)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-11-output-2.png" width="1552" height="1170"></p>
+</div>
+</div>
+<p><strong>Outliers:</strong></p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.1</span>, bottom<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, wspace<span class="op">=</span><span class="fl">0.4</span>, hspace<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, column <span class="kw">in</span> <span class="bu">enumerate</span>(numeric_columns, <span class="dv">1</span>):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">7</span>, <span class="dv">3</span>, i)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(df[column], orient<span class="op">=</span><span class="st">'h'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-12-output-1.png" width="1222" height="1199"></p>
+</div>
+</div>
+<p><strong>Data Preprocessing:</strong></p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_pre<span class="op">=</span>df.copy()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df_pre.drop(object_columns, axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>df_pre.head(<span class="dv">3</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>columns_names <span class="op">=</span> <span class="bu">list</span>(df_pre.columns)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>columns_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>['BALANCE',
+ 'BALANCE_FREQUENCY',
+ 'PURCHASES',
+ 'ONEOFF_PURCHASES',
+ 'INSTALLMENTS_PURCHASES',
+ 'CASH_ADVANCE',
+ 'PURCHASES_FREQUENCY',
+ 'ONEOFF_PURCHASES_FREQUENCY',
+ 'PURCHASES_INSTALLMENTS_FREQUENCY',
+ 'CASH_ADVANCE_FREQUENCY',
+ 'CASH_ADVANCE_TRX',
+ 'PURCHASES_TRX',
+ 'CREDIT_LIMIT',
+ 'PAYMENTS',
+ 'MINIMUM_PAYMENTS',
+ 'PRC_FULL_PAYMENT',
+ 'TENURE']</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_NoNull <span class="op">=</span> pd.DataFrame(SimpleImputer(strategy<span class="op">=</span><span class="st">'median'</span>).fit_transform(df_pre), columns<span class="op">=</span>columns_names)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>df_NoNull </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">BALANCE</th>
+<th data-quarto-table-cell-role="th">BALANCE_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">PURCHASES</th>
+<th data-quarto-table-cell-role="th">ONEOFF_PURCHASES</th>
+<th data-quarto-table-cell-role="th">INSTALLMENTS_PURCHASES</th>
+<th data-quarto-table-cell-role="th">CASH_ADVANCE</th>
+<th data-quarto-table-cell-role="th">PURCHASES_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">ONEOFF_PURCHASES_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">PURCHASES_INSTALLMENTS_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">CASH_ADVANCE_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">CASH_ADVANCE_TRX</th>
+<th data-quarto-table-cell-role="th">PURCHASES_TRX</th>
+<th data-quarto-table-cell-role="th">CREDIT_LIMIT</th>
+<th data-quarto-table-cell-role="th">PAYMENTS</th>
+<th data-quarto-table-cell-role="th">MINIMUM_PAYMENTS</th>
+<th data-quarto-table-cell-role="th">PRC_FULL_PAYMENT</th>
+<th data-quarto-table-cell-role="th">TENURE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>40.900749</td>
+<td>0.818182</td>
+<td>95.40</td>
+<td>0.00</td>
+<td>95.40</td>
+<td>0.000000</td>
+<td>0.166667</td>
+<td>0.000000</td>
+<td>0.083333</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>2.0</td>
+<td>1000.0</td>
+<td>201.802084</td>
+<td>139.509787</td>
+<td>0.000000</td>
+<td>12.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>3202.467416</td>
+<td>0.909091</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>6442.945483</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.250000</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>7000.0</td>
+<td>4103.032597</td>
+<td>1072.340217</td>
+<td>0.222222</td>
+<td>12.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2495.148862</td>
+<td>1.000000</td>
+<td>773.17</td>
+<td>773.17</td>
+<td>0.00</td>
+<td>0.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>12.0</td>
+<td>7500.0</td>
+<td>622.066742</td>
+<td>627.284787</td>
+<td>0.000000</td>
+<td>12.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1666.670542</td>
+<td>0.636364</td>
+<td>1499.00</td>
+<td>1499.00</td>
+<td>0.00</td>
+<td>205.788017</td>
+<td>0.083333</td>
+<td>0.083333</td>
+<td>0.000000</td>
+<td>0.083333</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>7500.0</td>
+<td>0.000000</td>
+<td>312.343947</td>
+<td>0.000000</td>
+<td>12.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>817.714335</td>
+<td>1.000000</td>
+<td>16.00</td>
+<td>16.00</td>
+<td>0.00</td>
+<td>0.000000</td>
+<td>0.083333</td>
+<td>0.083333</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1200.0</td>
+<td>678.334763</td>
+<td>244.791237</td>
+<td>0.000000</td>
+<td>12.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8945</td>
+<td>28.493517</td>
+<td>1.000000</td>
+<td>291.12</td>
+<td>0.00</td>
+<td>291.12</td>
+<td>0.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.833333</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>1000.0</td>
+<td>325.594462</td>
+<td>48.886365</td>
+<td>0.500000</td>
+<td>6.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8946</td>
+<td>19.183215</td>
+<td>1.000000</td>
+<td>300.00</td>
+<td>0.00</td>
+<td>300.00</td>
+<td>0.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.833333</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>1000.0</td>
+<td>275.861322</td>
+<td>312.343947</td>
+<td>0.000000</td>
+<td>6.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8947</td>
+<td>23.398673</td>
+<td>0.833333</td>
+<td>144.40</td>
+<td>0.00</td>
+<td>144.40</td>
+<td>0.000000</td>
+<td>0.833333</td>
+<td>0.000000</td>
+<td>0.666667</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>5.0</td>
+<td>1000.0</td>
+<td>81.270775</td>
+<td>82.418369</td>
+<td>0.250000</td>
+<td>6.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8948</td>
+<td>13.457564</td>
+<td>0.833333</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>36.558778</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.166667</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>500.0</td>
+<td>52.549959</td>
+<td>55.755628</td>
+<td>0.250000</td>
+<td>6.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8949</td>
+<td>372.708075</td>
+<td>0.666667</td>
+<td>1093.25</td>
+<td>1093.25</td>
+<td>0.00</td>
+<td>127.040008</td>
+<td>0.666667</td>
+<td>0.666667</td>
+<td>0.000000</td>
+<td>0.333333</td>
+<td>2.0</td>
+<td>23.0</td>
+<td>1200.0</td>
+<td>63.165404</td>
+<td>88.288956</td>
+<td>0.000000</td>
+<td>6.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>8950 rows × 17 columns</p>
+</div>
+</div>
+</div>
+<p><strong>Log Transform for handling outliers:</strong></p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># will add 1 to all values because log transform get error for numbers between 0 and 1</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df_pre2 <span class="op">=</span> (df_NoNull <span class="op">+</span> <span class="dv">1</span>) </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df_log <span class="op">=</span> np.log(df_pre2)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>df_log.describe().T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">BALANCE</td>
+<td>8950.0</td>
+<td>6.161637</td>
+<td>2.013303</td>
+<td>0.000000</td>
+<td>4.861995</td>
+<td>6.773521</td>
+<td>7.628099</td>
+<td>9.854515</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">BALANCE_FREQUENCY</td>
+<td>8950.0</td>
+<td>0.619940</td>
+<td>0.148590</td>
+<td>0.000000</td>
+<td>0.635989</td>
+<td>0.693147</td>
+<td>0.693147</td>
+<td>0.693147</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PURCHASES</td>
+<td>8950.0</td>
+<td>4.899647</td>
+<td>2.916872</td>
+<td>0.000000</td>
+<td>3.704627</td>
+<td>5.892417</td>
+<td>7.013133</td>
+<td>10.800403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ONEOFF_PURCHASES</td>
+<td>8950.0</td>
+<td>3.204274</td>
+<td>3.246365</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>3.663562</td>
+<td>6.360274</td>
+<td>10.615512</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">INSTALLMENTS_PURCHASES</td>
+<td>8950.0</td>
+<td>3.352403</td>
+<td>3.082973</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>4.499810</td>
+<td>6.151961</td>
+<td>10.021315</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">CASH_ADVANCE</td>
+<td>8950.0</td>
+<td>3.319086</td>
+<td>3.566298</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>7.016449</td>
+<td>10.760839</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PURCHASES_FREQUENCY</td>
+<td>8950.0</td>
+<td>0.361268</td>
+<td>0.277317</td>
+<td>0.000000</td>
+<td>0.080042</td>
+<td>0.405465</td>
+<td>0.650588</td>
+<td>0.693147</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ONEOFF_PURCHASES_FREQUENCY</td>
+<td>8950.0</td>
+<td>0.158699</td>
+<td>0.216672</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.080042</td>
+<td>0.262364</td>
+<td>0.693147</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PURCHASES_INSTALLMENTS_FREQUENCY</td>
+<td>8950.0</td>
+<td>0.270072</td>
+<td>0.281852</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.154151</td>
+<td>0.559616</td>
+<td>0.693147</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">CASH_ADVANCE_FREQUENCY</td>
+<td>8950.0</td>
+<td>0.113512</td>
+<td>0.156716</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.200671</td>
+<td>0.916291</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CASH_ADVANCE_TRX</td>
+<td>8950.0</td>
+<td>0.817570</td>
+<td>1.009316</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.609438</td>
+<td>4.820282</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PURCHASES_TRX</td>
+<td>8950.0</td>
+<td>1.894731</td>
+<td>1.373856</td>
+<td>0.000000</td>
+<td>0.693147</td>
+<td>2.079442</td>
+<td>2.890372</td>
+<td>5.883322</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CREDIT_LIMIT</td>
+<td>8950.0</td>
+<td>8.094825</td>
+<td>0.819629</td>
+<td>3.931826</td>
+<td>7.378384</td>
+<td>8.006701</td>
+<td>8.779711</td>
+<td>10.308986</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PAYMENTS</td>
+<td>8950.0</td>
+<td>6.624540</td>
+<td>1.591763</td>
+<td>0.000000</td>
+<td>5.951361</td>
+<td>6.754489</td>
+<td>7.550732</td>
+<td>10.834125</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MINIMUM_PAYMENTS</td>
+<td>8950.0</td>
+<td>5.916079</td>
+<td>1.169929</td>
+<td>0.018982</td>
+<td>5.146667</td>
+<td>5.747301</td>
+<td>6.671670</td>
+<td>11.243832</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PRC_FULL_PAYMENT</td>
+<td>8950.0</td>
+<td>0.117730</td>
+<td>0.211617</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.133531</td>
+<td>0.693147</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">TENURE</td>
+<td>8950.0</td>
+<td>2.519680</td>
+<td>0.130367</td>
+<td>1.945910</td>
+<td>2.564949</td>
+<td>2.564949</td>
+<td>2.564949</td>
+<td>2.564949</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.1</span>, bottom<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, wspace<span class="op">=</span><span class="fl">0.4</span>, hspace<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, column <span class="kw">in</span> <span class="bu">enumerate</span>(df_log.columns, <span class="dv">1</span>):</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">7</span>, <span class="dv">3</span>, i)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(df_log[column], orient<span class="op">=</span><span class="st">'h'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-16-output-1.png" width="1212" height="1199"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_pre2 <span class="op">=</span> df_NoNull.copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> QuantileTransformer</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>df_power <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>).fit_transform(df_pre2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_power<span class="op">=</span> pd.DataFrame(df_power, columns<span class="op">=</span>columns_names)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df_power.describe().T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">BALANCE</td>
+<td>8950.0</td>
+<td>-4.445854e-17</td>
+<td>1.000056</td>
+<td>-2.120305</td>
+<td>-0.816807</td>
+<td>0.151681</td>
+<td>0.717913</td>
+<td>2.731227</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">BALANCE_FREQUENCY</td>
+<td>8950.0</td>
+<td>-4.699903e-16</td>
+<td>1.000056</td>
+<td>-1.997716</td>
+<td>-0.598992</td>
+<td>0.628612</td>
+<td>0.628612</td>
+<td>0.628612</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PURCHASES</td>
+<td>8950.0</td>
+<td>1.238488e-16</td>
+<td>1.000056</td>
+<td>-1.505149</td>
+<td>-0.654799</td>
+<td>0.160770</td>
+<td>0.710251</td>
+<td>3.559070</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ONEOFF_PURCHASES</td>
+<td>8950.0</td>
+<td>6.986342e-17</td>
+<td>1.000056</td>
+<td>-1.000488</td>
+<td>-1.000488</td>
+<td>0.237516</td>
+<td>0.990945</td>
+<td>1.959134</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">INSTALLMENTS_PURCHASES</td>
+<td>8950.0</td>
+<td>7.343598e-17</td>
+<td>1.000056</td>
+<td>-1.085422</td>
+<td>-1.085422</td>
+<td>0.361196</td>
+<td>0.906100</td>
+<td>2.212015</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">CASH_ADVANCE</td>
+<td>8950.0</td>
+<td>1.381390e-16</td>
+<td>1.000056</td>
+<td>-0.944538</td>
+<td>-0.944538</td>
+<td>-0.944538</td>
+<td>1.059052</td>
+<td>1.729923</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PURCHASES_FREQUENCY</td>
+<td>8950.0</td>
+<td>6.668781e-17</td>
+<td>1.000056</td>
+<td>-1.278866</td>
+<td>-1.015926</td>
+<td>0.119657</td>
+<td>1.050283</td>
+<td>1.218860</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ONEOFF_PURCHASES_FREQUENCY</td>
+<td>8950.0</td>
+<td>-2.540488e-17</td>
+<td>1.000056</td>
+<td>-0.903315</td>
+<td>-0.903315</td>
+<td>-0.092230</td>
+<td>0.978077</td>
+<td>1.732554</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PURCHASES_INSTALLMENTS_FREQUENCY</td>
+<td>8950.0</td>
+<td>-7.462683e-17</td>
+<td>1.000056</td>
+<td>-1.004445</td>
+<td>-1.004445</td>
+<td>-0.273845</td>
+<td>1.069884</td>
+<td>1.377136</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">CASH_ADVANCE_FREQUENCY</td>
+<td>8950.0</td>
+<td>-9.804696e-17</td>
+<td>1.000056</td>
+<td>-0.883204</td>
+<td>-0.883204</td>
+<td>-0.883204</td>
+<td>1.016910</td>
+<td>1.902718</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CASH_ADVANCE_TRX</td>
+<td>8950.0</td>
+<td>-1.254366e-16</td>
+<td>1.000056</td>
+<td>-0.905801</td>
+<td>-0.905801</td>
+<td>-0.905801</td>
+<td>1.044342</td>
+<td>1.921254</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PURCHASES_TRX</td>
+<td>8950.0</td>
+<td>-2.889805e-16</td>
+<td>1.000056</td>
+<td>-1.387624</td>
+<td>-0.872718</td>
+<td>0.143257</td>
+<td>0.729118</td>
+<td>2.838620</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CREDIT_LIMIT</td>
+<td>8950.0</td>
+<td>-4.826927e-16</td>
+<td>1.000056</td>
+<td>-4.573150</td>
+<td>-0.880590</td>
+<td>-0.129660</td>
+<td>0.830085</td>
+<td>2.851804</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PAYMENTS</td>
+<td>8950.0</td>
+<td>-5.716098e-17</td>
+<td>1.000056</td>
+<td>-2.782085</td>
+<td>-0.608905</td>
+<td>-0.064284</td>
+<td>0.569453</td>
+<td>4.568553</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MINIMUM_PAYMENTS</td>
+<td>8950.0</td>
+<td>-6.668781e-16</td>
+<td>1.000056</td>
+<td>-5.869902</td>
+<td>-0.643745</td>
+<td>-0.115812</td>
+<td>0.665890</td>
+<td>4.036562</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PRC_FULL_PAYMENT</td>
+<td>8950.0</td>
+<td>-6.986342e-17</td>
+<td>1.000056</td>
+<td>-0.677889</td>
+<td>-0.677889</td>
+<td>-0.677889</td>
+<td>0.854117</td>
+<td>1.873638</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">TENURE</td>
+<td>8950.0</td>
+<td>7.621464e-16</td>
+<td>1.000056</td>
+<td>-2.526612</td>
+<td>0.422252</td>
+<td>0.422252</td>
+<td>0.422252</td>
+<td>0.422252</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.1</span>, bottom<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, wspace<span class="op">=</span><span class="fl">0.4</span>, hspace<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, column <span class="kw">in</span> <span class="bu">enumerate</span>(df_power.columns, <span class="dv">1</span>):</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">7</span>, <span class="dv">3</span>, i)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(df_power[column], orient<span class="op">=</span><span class="st">'h'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-1.png" width="1212" height="1199"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_power.hist(bins<span class="op">=</span><span class="dv">20</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>array([[&lt;Axes: title={'center': 'BALANCE'}&gt;,
+        &lt;Axes: title={'center': 'BALANCE_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'PURCHASES'}&gt;,
+        &lt;Axes: title={'center': 'ONEOFF_PURCHASES'}&gt;],
+       [&lt;Axes: title={'center': 'INSTALLMENTS_PURCHASES'}&gt;,
+        &lt;Axes: title={'center': 'CASH_ADVANCE'}&gt;,
+        &lt;Axes: title={'center': 'PURCHASES_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'ONEOFF_PURCHASES_FREQUENCY'}&gt;],
+       [&lt;Axes: title={'center': 'PURCHASES_INSTALLMENTS_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'CASH_ADVANCE_FREQUENCY'}&gt;,
+        &lt;Axes: title={'center': 'CASH_ADVANCE_TRX'}&gt;,
+        &lt;Axes: title={'center': 'PURCHASES_TRX'}&gt;],
+       [&lt;Axes: title={'center': 'CREDIT_LIMIT'}&gt;,
+        &lt;Axes: title={'center': 'PAYMENTS'}&gt;,
+        &lt;Axes: title={'center': 'MINIMUM_PAYMENTS'}&gt;,
+        &lt;Axes: title={'center': 'PRC_FULL_PAYMENT'}&gt;],
+       [&lt;Axes: title={'center': 'TENURE'}&gt;, &lt;Axes: &gt;, &lt;Axes: &gt;, &lt;Axes: &gt;]],
+      dtype=object)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-21-output-2.png" width="1561" height="1170"></p>
+</div>
+</div>
+<p><strong>Feature Transform</strong></p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MaxAbsScaler</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>scale_MinMax <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>df_transformed <span class="op">=</span> pd.DataFrame(scale_MinMax.fit_transform(df_NoNull), columns<span class="op">=</span>columns_names)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>scale_MinMax <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>df_transformed_Log <span class="op">=</span> pd.DataFrame(scale_MinMax.fit_transform(df_log), columns<span class="op">=</span>columns_names)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>scale_MinMax <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>df_transformed_Power <span class="op">=</span> pd.DataFrame(scale_MinMax.fit_transform(df_power), columns<span class="op">=</span>columns_names)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>scale_Standard <span class="op">=</span> StandardScaler()</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>df_transformed_Power <span class="op">=</span> pd.DataFrame(scale_Standard.fit_transform(df_power), columns<span class="op">=</span>columns_names)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>df_log.to_csv(<span class="st">"./Data_Log.csv"</span>,index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-with-log-transformation-to-clustering-and-anomaly-detection" class="level4">
+<h4 class="anchored" data-anchor-id="data-with-log-transformation-to-clustering-and-anomaly-detection"><strong>Data with Log Transformation to Clustering and Anomaly detection</strong></h4>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df_transformed <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/outlier-detection/Data_Log.csv'</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df_transformed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">BALANCE</th>
+<th data-quarto-table-cell-role="th">BALANCE_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">PURCHASES</th>
+<th data-quarto-table-cell-role="th">ONEOFF_PURCHASES</th>
+<th data-quarto-table-cell-role="th">INSTALLMENTS_PURCHASES</th>
+<th data-quarto-table-cell-role="th">CASH_ADVANCE</th>
+<th data-quarto-table-cell-role="th">PURCHASES_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">ONEOFF_PURCHASES_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">PURCHASES_INSTALLMENTS_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">CASH_ADVANCE_FREQUENCY</th>
+<th data-quarto-table-cell-role="th">CASH_ADVANCE_TRX</th>
+<th data-quarto-table-cell-role="th">PURCHASES_TRX</th>
+<th data-quarto-table-cell-role="th">CREDIT_LIMIT</th>
+<th data-quarto-table-cell-role="th">PAYMENTS</th>
+<th data-quarto-table-cell-role="th">MINIMUM_PAYMENTS</th>
+<th data-quarto-table-cell-role="th">PRC_FULL_PAYMENT</th>
+<th data-quarto-table-cell-role="th">TENURE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>3.735304</td>
+<td>0.597837</td>
+<td>4.568506</td>
+<td>0.000000</td>
+<td>4.568506</td>
+<td>0.000000</td>
+<td>0.154151</td>
+<td>0.000000</td>
+<td>0.080042</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.098612</td>
+<td>6.908755</td>
+<td>5.312231</td>
+<td>4.945277</td>
+<td>0.000000</td>
+<td>2.564949</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8.071989</td>
+<td>0.646627</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>8.770896</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.223144</td>
+<td>1.609438</td>
+<td>0.000000</td>
+<td>8.853808</td>
+<td>8.319725</td>
+<td>6.978531</td>
+<td>0.200671</td>
+<td>2.564949</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>7.822504</td>
+<td>0.693147</td>
+<td>6.651791</td>
+<td>6.651791</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.693147</td>
+<td>0.693147</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>2.564949</td>
+<td>8.922792</td>
+<td>6.434654</td>
+<td>6.442994</td>
+<td>0.000000</td>
+<td>2.564949</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7.419183</td>
+<td>0.492477</td>
+<td>7.313220</td>
+<td>7.313220</td>
+<td>0.000000</td>
+<td>5.331694</td>
+<td>0.080042</td>
+<td>0.080042</td>
+<td>0.000000</td>
+<td>0.080042</td>
+<td>0.693147</td>
+<td>0.693147</td>
+<td>8.922792</td>
+<td>0.000000</td>
+<td>5.747301</td>
+<td>0.000000</td>
+<td>2.564949</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>6.707735</td>
+<td>0.693147</td>
+<td>2.833213</td>
+<td>2.833213</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.080042</td>
+<td>0.080042</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.693147</td>
+<td>7.090910</td>
+<td>6.521114</td>
+<td>5.504483</td>
+<td>0.000000</td>
+<td>2.564949</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8945</td>
+<td>3.384170</td>
+<td>0.693147</td>
+<td>5.677165</td>
+<td>0.000000</td>
+<td>5.677165</td>
+<td>0.000000</td>
+<td>0.693147</td>
+<td>0.000000</td>
+<td>0.606136</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.945910</td>
+<td>6.908755</td>
+<td>5.788719</td>
+<td>3.909748</td>
+<td>0.405465</td>
+<td>1.945910</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8946</td>
+<td>3.004851</td>
+<td>0.693147</td>
+<td>5.707110</td>
+<td>0.000000</td>
+<td>5.707110</td>
+<td>0.000000</td>
+<td>0.693147</td>
+<td>0.000000</td>
+<td>0.606136</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.945910</td>
+<td>6.908755</td>
+<td>5.623517</td>
+<td>5.747301</td>
+<td>0.000000</td>
+<td>1.945910</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8947</td>
+<td>3.194529</td>
+<td>0.606136</td>
+<td>4.979489</td>
+<td>0.000000</td>
+<td>4.979489</td>
+<td>0.000000</td>
+<td>0.606136</td>
+<td>0.000000</td>
+<td>0.510826</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.791759</td>
+<td>6.908755</td>
+<td>4.410016</td>
+<td>4.423869</td>
+<td>0.223144</td>
+<td>1.945910</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8948</td>
+<td>2.671218</td>
+<td>0.606136</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>3.625907</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.154151</td>
+<td>1.098612</td>
+<td>0.000000</td>
+<td>6.216606</td>
+<td>3.980615</td>
+<td>4.038755</td>
+<td>0.223144</td>
+<td>1.945910</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8949</td>
+<td>5.923475</td>
+<td>0.510826</td>
+<td>6.997824</td>
+<td>6.997824</td>
+<td>0.000000</td>
+<td>4.852343</td>
+<td>0.510826</td>
+<td>0.510826</td>
+<td>0.000000</td>
+<td>0.287682</td>
+<td>1.098612</td>
+<td>3.178054</td>
+<td>7.090910</td>
+<td>4.161464</td>
+<td>4.491878</td>
+<td>0.000000</td>
+<td>1.945910</td>
+</tr>
+</tbody>
+</table>
+
+<p>8950 rows × 17 columns</p>
+</div>
+</div>
+</div>
+<p><strong>Clustering</strong></p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To plot Elbow With Inertia </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>inertia <span class="op">=</span> []</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>Range <span class="op">=</span> [<span class="op">*</span><span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">11</span>)]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> Range: </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    kmean <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k, max_iter<span class="op">=</span><span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    kmean.fit(df_transformed)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    inertia.append(kmean.inertia_)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>plt.plot(Range, inertia, <span class="st">'bx-'</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'k'</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Inertia'</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'The Elbow Method '</span>)</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-25-output-1.png" width="842" height="376"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>drop_variation <span class="op">=</span> []</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>drop_variation.append(<span class="dv">0</span>) <span class="co">#add 0 in the first element </span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(inertia) <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    dropValue <span class="op">=</span> inertia[i] <span class="op">-</span> inertia[i<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    drop_variation.append(dropValue) </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># select suitable k that have large drop in the variation</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> Range[np.argmax(drop_variation)]</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Suitable number of clusters = "</span>,k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Suitable number of clusters =  2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">42</span>).fit(df_transformed)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> kmeans.labels_</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>iner <span class="op">=</span> kmeans.inertia_</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>cent <span class="op">=</span> kmeans.cluster_centers_</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st">~~ THIS RESULT OF K-mean SKLEARN  ~~"</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'~'</span><span class="op">*</span><span class="dv">50</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sum of elements that contain in cluster 0 :"</span>,(labels <span class="op">==</span> <span class="dv">0</span>).<span class="bu">sum</span>())</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sum of elements that contain in cluster 1 :"</span>,(labels <span class="op">==</span> <span class="dv">1</span>).<span class="bu">sum</span>())</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sum of elements that contain in cluster 2 :"</span>,(labels <span class="op">==</span> <span class="dv">2</span>).<span class="bu">sum</span>())</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"sum of elements that contain in cluster 3 :"</span>,(labels <span class="op">==</span> <span class="dv">3</span>).<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    ~~ THIS RESULT OF K-mean SKLEARN  ~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+sum of elements that contain in cluster 0 : 2086
+sum of elements that contain in cluster 1 : 2133
+sum of elements that contain in cluster 2 : 1976
+sum of elements that contain in cluster 3 : 2755</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> yellowbrick.cluster <span class="im">import</span> SilhouetteVisualizer</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>score <span class="op">=</span> silhouette_score(df_transformed,  labels, metric<span class="op">=</span><span class="st">'euclidean'</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Silhouett Score: </span><span class="sc">%.3f</span><span class="st">'</span> <span class="op">%</span> score)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>visualizer <span class="op">=</span> SilhouetteVisualizer(kmeans, colors<span class="op">=</span><span class="st">'yellowbrick'</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>visualizer.fit(df_transformed)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>visualizer.show()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Silhouett Score: 0.400</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-29-output-2.png" width="660" height="487"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>&lt;Axes: title={'center': 'Silhouette Plot of KMeans Clustering for 8950 Samples in 4 Centers'}, xlabel='silhouette coefficient values', ylabel='cluster label'&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> KernelPCA</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>kpca <span class="op">=</span> KernelPCA(n_components<span class="op">=</span><span class="dv">10</span>, kernel<span class="op">=</span><span class="st">'rbf'</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>df_kpca <span class="op">=</span> pd.DataFrame(kpca.fit_transform(df_transformed))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>df_kpca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">6</th>
+<th data-quarto-table-cell-role="th">7</th>
+<th data-quarto-table-cell-role="th">8</th>
+<th data-quarto-table-cell-role="th">9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>-0.322024</td>
+<td>0.516047</td>
+<td>0.085217</td>
+<td>0.036215</td>
+<td>-0.015608</td>
+<td>-0.013188</td>
+<td>-0.345512</td>
+<td>0.052362</td>
+<td>0.067164</td>
+<td>0.204233</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.571038</td>
+<td>0.078448</td>
+<td>0.114536</td>
+<td>0.005173</td>
+<td>-0.033539</td>
+<td>0.586146</td>
+<td>-0.004310</td>
+<td>0.012051</td>
+<td>0.002466</td>
+<td>0.001755</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>-0.097995</td>
+<td>-0.181926</td>
+<td>-0.298064</td>
+<td>0.500376</td>
+<td>-0.085155</td>
+<td>0.017446</td>
+<td>0.030665</td>
+<td>0.070862</td>
+<td>-0.147242</td>
+<td>0.267388</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>-0.031012</td>
+<td>-0.038757</td>
+<td>-0.127563</td>
+<td>-0.017882</td>
+<td>0.049901</td>
+<td>-0.002018</td>
+<td>0.004615</td>
+<td>0.049781</td>
+<td>0.032890</td>
+<td>-0.013316</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>-0.042195</td>
+<td>-0.045667</td>
+<td>-0.203879</td>
+<td>0.215753</td>
+<td>-0.010849</td>
+<td>-0.072370</td>
+<td>0.016403</td>
+<td>0.047356</td>
+<td>0.017663</td>
+<td>0.074450</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8945</td>
+<td>-0.376092</td>
+<td>0.612240</td>
+<td>0.150075</td>
+<td>0.016713</td>
+<td>-0.014451</td>
+<td>0.003618</td>
+<td>-0.282473</td>
+<td>0.008226</td>
+<td>-0.007720</td>
+<td>0.018540</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8946</td>
+<td>-0.373469</td>
+<td>0.605441</td>
+<td>0.145621</td>
+<td>0.015209</td>
+<td>-0.013303</td>
+<td>0.002802</td>
+<td>-0.247563</td>
+<td>0.017263</td>
+<td>-0.006531</td>
+<td>0.050644</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8947</td>
+<td>-0.326389</td>
+<td>0.532047</td>
+<td>0.093867</td>
+<td>0.027570</td>
+<td>-0.015974</td>
+<td>-0.005210</td>
+<td>-0.444072</td>
+<td>0.050256</td>
+<td>0.070342</td>
+<td>0.165628</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8948</td>
+<td>0.052839</td>
+<td>-0.013372</td>
+<td>-0.091298</td>
+<td>-0.008970</td>
+<td>0.022265</td>
+<td>-0.223196</td>
+<td>-0.010937</td>
+<td>0.064317</td>
+<td>0.052705</td>
+<td>-0.028263</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8949</td>
+<td>-0.046451</td>
+<td>-0.076523</td>
+<td>-0.235957</td>
+<td>0.025098</td>
+<td>0.191674</td>
+<td>0.006375</td>
+<td>-0.012778</td>
+<td>-0.017814</td>
+<td>-0.028892</td>
+<td>-0.009289</td>
+</tr>
+</tbody>
+</table>
+
+<p>8950 rows × 10 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> IsolationForest(random_state<span class="op">=</span><span class="dv">0</span>, </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                      max_features<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                      n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                      contamination<span class="op">=</span><span class="fl">0.1</span>).fit(df_kpca)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>anom_pred <span class="op">=</span> clf.predict(df_kpca)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>anom_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>array([1, 1, 1, ..., 1, 1, 1])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>tsne <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>            perplexity<span class="op">=</span><span class="dv">50</span>,  </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>            random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>            n_iter<span class="op">=</span><span class="dv">300</span>).fit_transform(df_transformed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df_embed_Iso <span class="op">=</span> pd.DataFrame(tsne, columns<span class="op">=</span>[<span class="st">'feature1'</span>, <span class="st">'feature2'</span>])</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>df_embed_Iso[<span class="st">'Labels'</span>]<span class="op">=</span> pd.DataFrame(anom_pred)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>df_embed_Iso</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature1</th>
+<th data-quarto-table-cell-role="th">feature2</th>
+<th data-quarto-table-cell-role="th">Labels</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.407689</td>
+<td>-5.521269</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>-5.836224</td>
+<td>2.789712</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.094771</td>
+<td>3.217455</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>-1.684396</td>
+<td>6.508462</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>3.838952</td>
+<td>4.256968</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8945</td>
+<td>0.704921</td>
+<td>-7.746036</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8946</td>
+<td>0.093061</td>
+<td>-7.773806</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8947</td>
+<td>-0.642122</td>
+<td>-5.856036</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8948</td>
+<td>-5.276070</td>
+<td>-6.167468</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8949</td>
+<td>-2.545392</td>
+<td>7.006695</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>8950 rows × 3 columns</p>
+</div>
+</div>
+</div>
+<p><strong>TSNE Visualization</strong></p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">5</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'feature1'</span>, y<span class="op">=</span><span class="st">'feature2'</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_embed_Iso,    </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span>df_embed_Iso[<span class="st">'Labels'</span>],</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span>sns.color_palette(<span class="st">"hls"</span>, <span class="dv">2</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>&lt;Axes: xlabel='feature1', ylabel='feature2'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-34-output-2.png" width="740" height="430"></p>
+</div>
+</div>
 
 
 </section>

@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tahmina Sultana Priya">
-<meta name="dcterms.date" content="2023-10-29">
+<meta name="author" content="Tahmina Sultana">
+<meta name="dcterms.date" content="2023-11-05">
 <meta name="description" content="Linear Regression is a supervised learning algorithm used for modeling the relationship between a dependent variable and one or more independent variables by fitting a linear equation to observed data.">
 
 <title>MLBlog - Linear Regression</title>
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">python</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -166,14 +166,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tahmina Sultana Priya </p>
+               <p>Tahmina Sultana </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 29, 2023</p>
+        <p class="date">November 5, 2023</p>
       </div>
     </div>
     
@@ -191,8 +191,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="linear-regressiondefinition-working-principle" class="level1">
-<h1><img src="lin.png" class="img-fluid" alt="Linear Regression">Definition &amp; Working principle</h1>
+<section id="linear-regression" class="level1">
+<h1><img src="lin.png" class="img-fluid" width="650" alt="Linear Regression"></h1>
+<p><strong>Contents:</strong></p>
+<ul>
+<li><p>What Is Linear Regression?</p></li>
+<li><p>Example of Linear Regression with <a href="https://www.kaggle.com/datasets/teertha/ushealthinsurancedataset/data">US Health Insurance dataset</a>.</p></li>
+<li><p>Data Preprocessing</p></li>
+<li><p>Data Visualization</p></li>
+<li><p>Model Implementation</p></li>
+<li><p>Evaluation</p></li>
+</ul>
+</section>
+<section id="definition-working-principle" class="level1">
+<h1>Definition &amp; Working principle</h1>
 <p>Linear regression is a supervised learning technique employed when the target or dependent variable consists of continuous real numbers. It aims to establish a connection between the dependent variable, denoted as <em>y</em> and one or multiple independent variables, typically represented as <em>x</em>, by determining the best-fit line. This approach operates based on the principle of Ordinary Least Squares (OLS) or Mean Square Error (MSE). In statistical terms, OLS is a method used to estimate the unknown parameters of the linear regression function, with the objective of minimizing the sum of squared differences between the observed dependent variable in the given dataset and the values predicted by the linear regression function.</p>
 <section id="import-library-and-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="import-library-and-dataset">Import Library and Dataset</h2>
@@ -202,18 +214,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas  <span class="im">as</span> pd <span class="co">#Data manipulation</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np <span class="co">#Data manipulation</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt <span class="co"># Visualization</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns <span class="co">#Visualization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns <span class="co">#Visualization</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import dataset</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#path ='dataset/'</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../input/'</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/linregression/insurance.csv'</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Number of rows and columns in the data set: '</span>,df.shape)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">''</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Lets look into top few rows and columns in the dataset</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/linregression/insurance.csv'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Number of rows and columns in the data set: '</span>,df.shape)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">''</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Number of rows and columns in the data set:  (1338, 7)
@@ -297,12 +307,12 @@ Number of rows and columns in the data set:  (1338, 7)
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">""" for our visualization purpose will fit line using seaborn library only for bmi as independent variable </span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">and charges as dependent variable"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sns.lmplot(x<span class="op">=</span><span class="st">'bmi'</span>,y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,aspect<span class="op">=</span><span class="dv">2</span>,height<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sns.lmplot(x<span class="op">=</span><span class="st">'bmi'</span>,y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,aspect<span class="op">=</span><span class="fl">1.5</span>,  height<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Boby Mass Index$(kg/m^2)$: as Independent variable'</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Insurance Charges: as Dependent variable'</span>)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Charge Vs BMI'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="1142" height="591"></p>
+<p><img src="index_files/figure-html/cell-4-output-1.png" width="566" height="399"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
@@ -387,72 +397,69 @@ Number of rows and columns in the data set:  (1338, 7)
 <section id="check-for-missing-value" class="level3">
 <h3 class="anchored" data-anchor-id="check-for-missing-value">Check for missing value</h3>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">4</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.isnull(),cbar<span class="op">=</span><span class="va">False</span>,cmap<span class="op">=</span><span class="st">'viridis'</span>,yticklabels<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Missing value in the dataset'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-6-output-1.png" width="912" height="357"></p>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for missing values in the DataFrame</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>missing_values <span class="op">=</span> df.isnull().<span class="bu">sum</span>()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Missing values count per column:"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(missing_values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Missing values count per column:
+age         0
+sex         0
+bmi         0
+children    0
+smoker      0
+region      0
+charges     0
+dtype: int64</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">4</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ax<span class="op">=</span>f.add_subplot(<span class="dv">121</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">'charges'</span>],bins<span class="op">=</span><span class="dv">50</span>,color<span class="op">=</span><span class="st">'r'</span>,ax<span class="op">=</span>ax)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of insurance charges'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ax<span class="op">=</span>f.add_subplot(<span class="dv">122</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>sns.histplot(np.log10(df[<span class="st">'charges'</span>]),bins<span class="op">=</span><span class="dv">40</span>,color<span class="op">=</span><span class="st">'b'</span>,ax<span class="op">=</span>ax)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of insurance charges in $log$ sacle'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax.set_xscale(<span class="st">'log'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">4</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax<span class="op">=</span>f.add_subplot(<span class="dv">121</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">'charges'</span>],bins<span class="op">=</span><span class="dv">50</span>,color<span class="op">=</span><span class="st">'r'</span>,ax<span class="op">=</span>ax)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of insurance charges'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ax<span class="op">=</span>f.add_subplot(<span class="dv">122</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>sns.histplot(np.log10(df[<span class="st">'charges'</span>]),bins<span class="op">=</span><span class="dv">40</span>,color<span class="op">=</span><span class="st">'b'</span>,ax<span class="op">=</span>ax)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of insurance charges in $log$ sacle'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>ax.set_xscale(<span class="st">'log'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-7-output-1.png" width="965" height="377"></p>
+<p><img src="index_files/figure-html/cell-7-output-1.png" width="770" height="377"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">121</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'sex'</span>, y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'Wistia'</span>,ax<span class="op">=</span>ax)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Violin plot of Charges vs sex'</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">122</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'smoker'</span>, y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'magma'</span>,ax<span class="op">=</span>ax)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Violin plot of Charges vs smoker'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_49564/1103035780.py:3: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.violinplot(x='sex', y='charges',data=df,palette='Wistia',ax=ax)
-/tmp/ipykernel_49564/1103035780.py:7: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.violinplot(x='smoker', y='charges',data=df,palette='magma',ax=ax)</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">121</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'sex'</span>, y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'Wistia'</span>,ax<span class="op">=</span>ax)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Violin plot of Charges vs sex'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">122</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'smoker'</span>, y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'magma'</span>,ax<span class="op">=</span>ax)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Violin plot of Charges vs smoker'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-8-output-2.png" width="1131" height="523"></p>
+<p><img src="index_files/figure-html/cell-8-output-1.png" width="759" height="523"></p>
 </div>
 </div>
 <p>From left plot the insurance charge for male and female is approximatley in same range,it is average around 5000 bucks. In right plot the insurance charge for smokers is much wide range compare to non smokers, the average charges for non smoker is approximately 5000 bucks. For smoker the minimum insurance charge is itself 5000 bucks.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">'children'</span>, y<span class="op">=</span><span class="st">'charges'</span>,hue<span class="op">=</span><span class="st">'sex'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Box plot of charges vs children'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-9-output-1.png" width="1131" height="523"></p>
+<p><img src="index_files/figure-html/cell-9-output-1.png" width="759" height="523"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'region'</span>, y<span class="op">=</span><span class="st">'charges'</span>,hue<span class="op">=</span><span class="st">'sex'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'rainbow'</span>,split<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Violin plot of charges vs children'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-10-output-1.png" width="1131" height="523"></p>
+<p><img src="index_files/figure-html/cell-10-output-1.png" width="759" height="523"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">121</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'age'</span>,y<span class="op">=</span><span class="st">'charges'</span>,data<span class="op">=</span>df,palette<span class="op">=</span><span class="st">'magma'</span>,hue<span class="op">=</span><span class="st">'smoker'</span>,ax<span class="op">=</span>ax)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Scatter plot of Charges vs age'</span>)</span>
@@ -462,7 +469,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Scatter plot of Charges vs bmi'</span>)</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'sc.png'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-11-output-1.png" width="1131" height="523"></p>
+<p><img src="index_files/figure-html/cell-11-output-1.png" width="759" height="523"></p>
 </div>
 </div>
 </section>
@@ -546,121 +553,9 @@ Number of rows and columns in the dataset: (1338, 13)</code></pre>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Parameter</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>sk_theta <span class="op">=</span> [lin_reg.intercept_]<span class="op">+</span><span class="bu">list</span>(lin_reg.coef_)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>parameter_df <span class="op">=</span> parameter_df.join(pd.Series(sk_theta, name<span class="op">=</span><span class="st">'Sklearn_theta'</span>))</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>parameter_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Parameter</th>
-<th data-quarto-table-cell-role="th">Columns</th>
-<th data-quarto-table-cell-role="th">theta</th>
-<th data-quarto-table-cell-role="th">Sklearn_theta</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>theta_0</td>
-<td>intersect:x_0=1</td>
-<td>7.059171</td>
-<td>7.059171</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>theta_1</td>
-<td>age</td>
-<td>0.033134</td>
-<td>0.033134</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>theta_2</td>
-<td>bmi</td>
-<td>0.013517</td>
-<td>0.013517</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>theta_3</td>
-<td>OHE_male</td>
-<td>-0.067767</td>
-<td>-0.067767</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>theta_4</td>
-<td>OHE_1</td>
-<td>0.149457</td>
-<td>0.149457</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>theta_5</td>
-<td>OHE_2</td>
-<td>0.272919</td>
-<td>0.272919</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>theta_6</td>
-<td>OHE_3</td>
-<td>0.244095</td>
-<td>0.244095</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>theta_7</td>
-<td>OHE_4</td>
-<td>0.523339</td>
-<td>0.523339</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>theta_8</td>
-<td>OHE_5</td>
-<td>0.466030</td>
-<td>0.466030</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>theta_9</td>
-<td>OHE_yes</td>
-<td>1.550481</td>
-<td>1.550481</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>theta_10</td>
-<td>OHE_northwest</td>
-<td>-0.055845</td>
-<td>-0.055845</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>theta_11</td>
-<td>OHE_southeast</td>
-<td>-0.146578</td>
-<td>-0.146578</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>theta_12</td>
-<td>OHE_southwest</td>
-<td>-0.133508</td>
-<td>-0.133508</td>
-</tr>
-</tbody>
-</table>
-
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>parameter_df <span class="op">=</span> parameter_df.join(pd.Series(sk_theta, name<span class="op">=</span><span class="st">'Sklearn_theta'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>The parameter obtained from both the model are same.So we succefull build our model using normal equation and verified using sklearn linear regression module. Let’s move ahead, next step is prediction and model evaluvation.</p>
+<p>The parameter obtained from both the model are same.So we successfully build our model using normal equation and verified using sklearn linear regression module. Let’s move ahead, next step is prediction and model evaluation.</p>
 <div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal equation</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>y_pred_norm <span class="op">=</span>  np.matmul(X_test_0,theta)</span>
@@ -708,7 +603,7 @@ R square obtain for scikit learn library is : 0.7795687545055319</code></pre>
 <p>Ensuring these assumptions are met is essential to build a reliable linear regression model.</p>
 <div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for Linearity</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">5</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">5</span>))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> f.add_subplot(<span class="dv">121</span>)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#sns.scatterplot(data=df, y_test, y_pred_sk)</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span>y_test,y<span class="op">=</span>y_pred_sk,ax<span class="op">=</span>ax,color<span class="op">=</span><span class="st">'r'</span>)</span>
@@ -720,13 +615,13 @@ R square obtain for scikit learn library is : 0.7795687545055319</code></pre>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>ax.axvline((y_test <span class="op">-</span> y_pred_sk).mean(),color<span class="op">=</span><span class="st">'k'</span>,linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Check for Residual normality &amp; mean: </span><span class="ch">\n</span><span class="st"> Residual eror'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-21-output-1.png" width="1100" height="467"></p>
+<p><img src="index_files/figure-html/cell-21-output-1.png" width="730" height="467"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for Multivariate Normality</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile-Quantile plot </span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>f,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>f,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">6</span>))</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy <span class="im">as</span> sp</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>_,(_,_,r)<span class="op">=</span> sp.stats.probplot((y_test <span class="op">-</span> y_pred_sk),fit<span class="op">=</span><span class="va">True</span>,plot<span class="op">=</span>ax[<span class="dv">0</span>])</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_title(<span class="st">'Check for Multivariate Normality: </span><span class="ch">\n</span><span class="st">Q-Q Plot'</span>)</span>
@@ -735,7 +630,7 @@ R square obtain for scikit learn library is : 0.7795687545055319</code></pre>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(y <span class="op">=</span> (y_test <span class="op">-</span> y_pred_sk), x<span class="op">=</span> y_pred_sk, ax <span class="op">=</span> ax[<span class="dv">1</span>],color<span class="op">=</span><span class="st">'r'</span>) </span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_title(<span class="st">'Check for Homoscedasticity: </span><span class="ch">\n</span><span class="st">Residual Vs Predicted'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-22-output-1.png" width="1121" height="541"></p>
+<p><img src="index_files/figure-html/cell-22-output-1.png" width="749" height="541"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="22">

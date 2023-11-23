@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tahmina Sultana Priya">
-<meta name="dcterms.date" content="2023-10-24">
+<meta name="author" content="Tahmina Sultana">
+<meta name="dcterms.date" content="2023-11-24">
 <meta name="description" content="Classification in Machine Learning involves the process of assigning predefined categories or labels to data points based on their features, enabling algorithms to learn and predict the class of new, unseen instances.">
 
 <title>MLBlog - Classification</title>
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">python</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -166,14 +166,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tahmina Sultana Priya </p>
+               <p>Tahmina Sultana </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 24, 2023</p>
+        <p class="date">November 24, 2023</p>
       </div>
     </div>
     
@@ -197,6 +197,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption class="figure-caption">Machine Learning Algorithms for Classification (src: <a href="https://towardsdatascience.com/top-machine-learning-algorithms-for-classification-2197870ff501" class="uri">https://towardsdatascience.com/top-machine-learning-algorithms-for-classification-2197870ff501</a>)</figcaption>
 </figure>
 </div>
+<p><strong>Contents:</strong></p>
+<ul>
+<li><p>Introduction to Classification.</p></li>
+<li><p>Different types of classification.</p></li>
+<li><p>Example of Linear Regression with <a href="https://www.kaggle.com/code/ratndeepchavan/prediction-of-heart-failure/input?select=heart.csv">Heart Failure Prediction dataset</a>.</p></li>
+<li><p>Data Visualization</p></li>
+<li><p>Data processing</p></li>
+<li><p>Model implementation</p></li>
+<li><p>Evaluation metrics implementation</p></li>
+</ul>
 <section id="introduction-to-classification" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-to-classification">Introduction to Classification</h2>
 <p>In the dynamic world of machine learning, classification stands out as a pivotal concept, providing the ability to categorize and interpret data for a wide array of applications. Whether you’re looking to filter spam emails, identify diseases from medical data, or recognize handwritten digits, classification algorithms are your go-to tools. In this blog post, we’ll delve into what classification is in machine learning, its significance, and how it’s transforming industries.</p>
@@ -303,12 +313,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.shadow'</span>] <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.fontsize'</span>] <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.size'</span>] <span class="op">=</span> <span class="dv">14</span></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.size'</span>] <span class="op">=</span> <span class="dv">14</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.dpi'</span>] <span class="op">=</span> <span class="dv">200</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.edgecolor'</span>] <span class="op">=</span> <span class="st">'Blue'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.dpi'</span>] <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.edgecolor'</span>] <span class="op">=</span> <span class="st">'Blue'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>,<span class="va">None</span>)</span>
@@ -709,34 +717,28 @@ Percentage of Men with probability of HeartDisease  : 63.0 %</code></pre>
 <p>Outliers represent atypical data points that have the potential to disrupt statistical analyses and challenge their underlying assumptions. Dealing with outliers is a common task for analysts, and deciding how to handle them can be a complex process. While the instinct may be to eliminate outliers to mitigate their impact, this approach is appropriate only in certain circumstances and should not be the default choice</p>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">20</span>))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Age'</span>],color<span class="op">=</span><span class="st">'DeepPink'</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Age'</span>],color<span class="op">=</span><span class="st">'DeepPink'</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'RestingBP'</span>],color<span class="op">=</span><span class="st">'DarkSlateGray'</span>)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'RestingBP'</span>],color<span class="op">=</span><span class="st">'DarkSlateGray'</span>)</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">5</span>)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Cholesterol'</span>],color<span class="op">=</span><span class="st">'Green'</span>)</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Cholesterol'</span>],color<span class="op">=</span><span class="st">'Green'</span>)</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">7</span>)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'MaxHR'</span>],color<span class="op">=</span><span class="st">'Red'</span>)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">8</span>)</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'MaxHR'</span>],color<span class="op">=</span><span class="st">'Red'</span>)</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>)</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Oldpeak'</span>],color<span class="op">=</span><span class="st">'Brown'</span>)</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">10</span>)</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Oldpeak'</span>],color<span class="op">=</span><span class="st">'Brown'</span>)</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Age'</span>],color<span class="op">=</span><span class="st">'DeepPink'</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Age'</span>],color<span class="op">=</span><span class="st">'DeepPink'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'RestingBP'</span>],color<span class="op">=</span><span class="st">'DarkSlateGray'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'RestingBP'</span>],color<span class="op">=</span><span class="st">'DarkSlateGray'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">5</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Cholesterol'</span>],color<span class="op">=</span><span class="st">'Green'</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Cholesterol'</span>],color<span class="op">=</span><span class="st">'Green'</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">7</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'MaxHR'</span>],color<span class="op">=</span><span class="st">'Red'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">8</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'MaxHR'</span>],color<span class="op">=</span><span class="st">'Red'</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Oldpeak'</span>],color<span class="op">=</span><span class="st">'Brown'</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">10</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Oldpeak'</span>],color<span class="op">=</span><span class="st">'Brown'</span>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tahmina Sultana Priya">
+<meta name="author" content="Tahmina Sultana">
 <meta name="dcterms.date" content="2023-10-29">
 <meta name="description" content="Nonlinear Regression involves modeling the relationship between dependent and independent variables using a nonlinear function, allowing for more complex and flexible patterns beyond linear relationships.">
 
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">python</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tahmina Sultana Priya </p>
+               <p>Tahmina Sultana </p>
             </div>
     </div>
       
@@ -191,6 +191,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<p><strong>Contents:</strong></p>
+<ul>
+<li><p>What Is Nonlinear Regression?</p></li>
+<li><p>Comparison to Linear Regression.</p></li>
+<li><p>Example of Nonlinear Regression.</p></li>
+<li><p>Example of Nonlinear Regression with <a href="https://github.com/datasets/gdp/blob/master/data/gdp.csv">GDP dataset</a>.</p></li>
+<li><p>Data Visualization</p></li>
+<li><p>Model Implementation</p></li>
+</ul>
 <section id="what-is-nonlinear-regression-comparison-to-linear-regression" class="level1">
 <h1>What Is Nonlinear Regression? Comparison to Linear Regression</h1>
 <div class="quarto-figure quarto-figure-center">
@@ -208,8 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Nonlinear regression involves using a curved mathematical function of X variables to make predictions for a Y variable.</p></li>
 <li><p>Nonlinear regression can be employed to model and predict population growth trends over time.</p></li>
 </ul>
-<p>Nonlinear regression modeling and linear regression modeling both aim to visually represent a specific response based on a set of variables. Nonlinear models are more intricate to construct compared to linear models because they involve approximations, often through trial-and-error iterations. Mathematicians employ established techniques like the Gauss-Newton method and the Levenberg-Marquardt method in this process.</p>
-<p>Sometimes, what may initially appear as a nonlinear regression model can, in fact, be linear. To determine the underlying relationships in your data, you can use curve estimation procedures to choose the appropriate regression model, be it linear or nonlinear. Linear regression models, typically represented as straight lines, can also exhibit curves depending on the specific linear equation used. Additionally, it’s possible to apply algebraic transformations to make a nonlinear equation resemble a linear one, termed as an “intrinsically linear” nonlinear equation.</p>
+<p>Nonlinear regression modeling and linear regression modeling both aim to visually represent a specific response based on a set of variables. Nonlinear models are more intricate to construct compared to linear models because they involve approximations, often through trial-and-error iterations. To determine the underlying relationships in your data, you can use curve estimation procedures to choose the appropriate regression model, be it linear or nonlinear. Linear regression models, typically represented as straight lines, can also exhibit curves depending on the specific linear equation used. Additionally, it’s possible to apply algebraic transformations to make a nonlinear equation resemble a linear one, termed as an “intrinsically linear” nonlinear equation.</p>
 <section id="example-of-nonlinear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="example-of-nonlinear-regression">Example of Nonlinear Regression</h2>
 <p><strong>I.Introduction</strong></p>
@@ -226,17 +234,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="linear">1. Linear</h2>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="fl">6.0</span>, <span class="fl">6.0</span>, <span class="fl">0.1</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">##You can adjust the slope and intercept to verify the changes in the graph</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>(x) <span class="op">+</span> <span class="dv">2</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y_noise <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.random.normal(size<span class="op">=</span>x.size)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ydata <span class="op">=</span> y <span class="op">+</span> y_noise</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.figure(figsize=(8,6))</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x, ydata,  <span class="st">'bo'</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, <span class="st">'r'</span>) </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>(x) <span class="op">+</span> <span class="dv">2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y_noise <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.random.normal(size<span class="op">=</span>x.size)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ydata <span class="op">=</span> y <span class="op">+</span> y_noise</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.figure(figsize=(8,6))</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>plt.plot(x, ydata,  <span class="st">'bo'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, <span class="st">'r'</span>) </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-3-output-1.png" width="596" height="429"></p>
 </div>
@@ -246,18 +252,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="polynomial">2. Polynomial</h2>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="fl">6.0</span>, <span class="fl">6.0</span>, <span class="fl">0.1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">##You can adjust the slope and intercept to verify the changes in the graph</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">1</span><span class="op">*</span>(x<span class="op">**</span><span class="dv">3</span>) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>(x<span class="op">**</span><span class="dv">2</span>) <span class="op">+</span> <span class="dv">1</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">3</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>y_noise <span class="op">=</span> <span class="dv">20</span> <span class="op">*</span> np.random.normal(size<span class="op">=</span>x.size)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ydata <span class="op">=</span> y <span class="op">+</span> y_noise</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x, ydata,  <span class="st">'bo'</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, <span class="st">'r'</span>) </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">1</span><span class="op">*</span>(x<span class="op">**</span><span class="dv">3</span>) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>(x<span class="op">**</span><span class="dv">2</span>) <span class="op">+</span> <span class="dv">1</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">3</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>y_noise <span class="op">=</span> <span class="dv">20</span> <span class="op">*</span> np.random.normal(size<span class="op">=</span>x.size)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ydata <span class="op">=</span> y <span class="op">+</span> y_noise</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.plot(x, ydata,  <span class="st">'bo'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, <span class="st">'r'</span>) </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-4-output-1.png" width="604" height="430"></p>
+<p><img src="index_files/figure-html/cell-4-output-1.png" width="604" height="429"></p>
 </div>
 </div>
 </section>
@@ -266,16 +270,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="fl">6.0</span>, <span class="fl">6.0</span>, <span class="fl">0.1</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">##You can adjust the slope and intercept to verify the changes in the graph</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.power(x,<span class="dv">2</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>y_noise <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.random.normal(size<span class="op">=</span>x.size)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ydata <span class="op">=</span> y <span class="op">+</span> y_noise</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x, ydata,  <span class="st">'bo'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, <span class="st">'r'</span>) </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.power(x,<span class="dv">2</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>y_noise <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.random.normal(size<span class="op">=</span>x.size)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>ydata <span class="op">=</span> y <span class="op">+</span> y_noise</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.plot(x, ydata,  <span class="st">'bo'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, <span class="st">'r'</span>) </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-5-output-1.png" width="585" height="429"></p>
 </div>
@@ -286,14 +288,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.arange(<span class="op">-</span><span class="fl">6.0</span>, <span class="fl">6.0</span>, <span class="fl">0.1</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">##You can adjust the slope and intercept to verify the changes in the graph</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span> np.exp(X)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span> np.exp(X)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.plot(X,Y) </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.plot(X,Y) </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dependent Variable'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Indepdendent Variable'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-6-output-1.png" width="593" height="429"></p>
 </div>
@@ -335,13 +335,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="non-linear-regression-example-with-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="non-linear-regression-example-with-dataset">Non-Linear Regression example with Dataset</h2>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../input/'</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/nlinregression/gdp.csv'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Number of rows and columns in the data set: '</span>,df.shape)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">''</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Lets look into top few rows and columns in the dataset</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/nlinregression/gdp.csv'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df1.head()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/nlinregression/gdp1.csv'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Number of rows and columns in the data set: '</span>,df.shape)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">''</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Lets look into top few rows and columns in the dataset</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Number of rows and columns in the data set:  (55, 2)
@@ -449,8 +450,7 @@ Number of rows and columns in the data set:  (55, 2)
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(sigmoid, xdata, ydata)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print the final parameters</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" beta_1 = </span><span class="sc">%f</span><span class="st">, beta_2 = </span><span class="sc">%f</span><span class="st">"</span> <span class="op">%</span> (popt[<span class="dv">0</span>], popt[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" beta_1 = </span><span class="sc">%f</span><span class="st">, beta_2 = </span><span class="sc">%f</span><span class="st">"</span> <span class="op">%</span> (popt[<span class="dv">0</span>], popt[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> beta_1 = 690.451709, beta_2 = 0.997207</code></pre>
 </div>
@@ -490,9 +490,9 @@ Number of rows and columns in the data set:  (55, 2)
 <span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
 <span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"R2-score: </span><span class="sc">%.2f</span><span class="st">"</span> <span class="op">%</span> r2_score(y_hat , test_y) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mean absolute error: 0.02
+<pre><code>Mean absolute error: 0.04
 Residual sum of squares (MSE): 0.00
-R2-score: 0.94</code></pre>
+R2-score: 0.97</code></pre>
 </div>
 </div>
 

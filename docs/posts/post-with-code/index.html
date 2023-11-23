@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tahmina Sultana Priya">
-<meta name="dcterms.date" content="2023-10-24">
+<meta name="author" content="Tahmina Sultana">
+<meta name="dcterms.date" content="2023-10-28">
 <meta name="description" content="Clustering in Machine Learning involves grouping similar data points together based on certain features or characteristics, aiming to discover inherent patterns or structures within the data.">
 
 <title>MLBlog - Clustering</title>
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -62,6 +96,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -109,14 +146,14 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Probability</h1>
+      <h1 class="title">Clustering</h1>
                   <div>
         <div class="description">
           Clustering in Machine Learning involves grouping similar data points together based on certain features or characteristics, aiming to discover inherent patterns or structures within the data.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">python</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -129,14 +166,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tahmina Sultana Priya </p>
+               <p>Tahmina Sultana </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 24, 2023</p>
+        <p class="date">October 28, 2023</p>
       </div>
     </div>
     
@@ -154,10 +191,1312 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="segment-1-introduction-to-probability" class="level2">
-<h2 class="anchored" data-anchor-id="segment-1-introduction-to-probability">Segment 1: Introduction to Probability</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="clustering_algorithm_8d26475260.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Image Source: <a href="https://static.javatpoint.com/tutorial/machine-learning/images/clustering-in-machine-learning.png" class="uri">https://static.javatpoint.com/tutorial/machine-learning/images/clustering-in-machine-learning.png</a></figcaption>
+</figure>
+</div>
+<p><strong>Contents:</strong></p>
+<ul>
+<li><p>Introduction to Clustering.</p></li>
+<li><p>Different types of clustering.</p></li>
+<li><p>Example of Clustering with <a href="https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset">Cardiovascular Disease dataset</a>.</p></li>
+<li><p>Data Visualization</p></li>
+<li><p>Data processing</p></li>
+<li><p>Model implementation</p></li>
+<li><p>Clustering result visualization</p></li>
+</ul>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>Clustering involves the task of grouping a population or data points into distinct clusters, where items within the same cluster share more similarities with each other compared to those in different clusters. Essentially, the goal is to identify and categorize groups with similar characteristics into clusters.</p>
+<p>There are various types of clustering algorithms due to the subjective nature of clustering:</p>
+<ol type="1">
+<li><p><strong>Connectivity models:</strong> These models rely on the premise that closer data points in the data space exhibit greater similarity. They can start by classifying each point into separate clusters and then merge them as distance decreases, or begin with one cluster and split it as distance increases. Hierarchical clustering is a prominent example of this model.</p></li>
+<li><p><strong>Centroid models:</strong> These iterative algorithms gauge similarity based on a point’s proximity to cluster centroids. K-Means clustering falls into this category, requiring the number of clusters to be specified beforehand, which demands prior knowledge of the dataset.</p></li>
+<li><p><strong>Distribution models:</strong> These models assess the probability that data points in a cluster belong to the same distribution, like Normal or Gaussian. The Expectation-maximization algorithm is an instance, but it tends to overfit the data.</p></li>
+<li><p><strong>Density Models:</strong> These algorithms explore data space for areas with varying densities of data points. They identify different density regions and group data points within these regions into the same cluster. DBSCAN and OPTICS are popular examples.</p></li>
+</ol>
+<p>I’ll delve deeper into two widely used clustering algorithms: K Means and Hierarchical clustering.</p>
+<section id="kmeans-clustering" class="level4">
+<h4 class="anchored" data-anchor-id="kmeans-clustering">1. KMeans Clustering:</h4>
+<p>K-Means clustering is an unsupervised technique used to group data without pre-existing labels for training. Instead, it relies on the inherent patterns within independent features to derive insights on unseen data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="1 b2sO2f--yfZiJazc5rYSpg.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Src: https://www.kaggle.com/code/pythonkumar/clustering-k-means-dbscan-gmm-bgmm-dendogram-viz</figcaption>
+</figure>
+</div>
+</section>
+<section id="hierarchical-clustering" class="level4">
+<h4 class="anchored" data-anchor-id="hierarchical-clustering"><strong>2. Hierarchical Clustering</strong></h4>
+<p>Hierarchical Clustering, also known as Hierarchical Cluster Analysis (HCA), is an unsupervised clustering method that organizes clusters with a clear top-to-bottom order.</p>
+<p>This algorithm groups similar objects into clusters, resembling the hierarchical organization seen in file and folder structures on a hard disk. The primary goal is to create a set of distinct clusters, each cluster being unique from the others, while objects within each cluster share substantial similarities.</p>
+<p>Hierarchical clustering is typically classified into two types:</p>
+<p><strong>Agglomerative Hierarchical Clustering</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hierarch.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Src: https://www.kaggle.com/code/pythonkumar/clustering-k-means-dbscan-gmm-bgmm-dendogram-viz</figcaption>
+</figure>
+</div>
+<p><strong>Divisive Hierarchical Clustering</strong></p>
+<ol type="1">
+<li><img src="Conceptual-dendrogram-for-agglomerative-and-divisive-Hierarchical-based-clustering-19.jpeg" class="img-fluid" alt="Src: https://www.kaggle.com/code/pythonkumar/clustering-k-means-dbscan-gmm-bgmm-dendogram-viz"></li>
+</ol>
+</section>
+<section id="density-baseddbscan" class="level4">
+<h4 class="anchored" data-anchor-id="density-baseddbscan"><strong>3. Density Based(DBSCAN)</strong></h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="DBSCAN_tutorial.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Src: https://www.kaggle.com/code/pythonkumar/clustering-k-means-dbscan-gmm-bgmm-dendogram-viz</figcaption>
+</figure>
+</div>
+<p>DBSCAN (Density-based spatial clustering of applications with noise) is an algorithm designed to identify clusters of varying shapes and sizes within a dataset, even in the presence of noise and outliers.</p>
+<p>The algorithm relies on two key parameters:</p>
+<ul>
+<li><p><strong>minPts:</strong> This threshold determines the minimum number of points required to be clustered together for a region to be recognized as dense.</p></li>
+<li><p><strong>eps (ε):</strong> A distance measurement used to locate neighboring points around any given point.</p></li>
+</ul>
+<p>After completing the DBSCAN clustering, three types of points emerge:</p>
+<ul>
+<li><p><strong>Core:</strong> These points have at least m neighboring points within a distance of n from themselves.</p></li>
+<li><p><strong>Border:</strong> Points classified as Border have at least one Core point within a distance of n.</p></li>
+<li><p><strong>Noise:</strong> These points neither qualify as Core nor Border points. They have fewer than m neighboring points within a distance of n from themselves.</p></li>
+</ul>
+</section>
+<section id="gaussian-mixture-model" class="level4">
+<h4 class="anchored" data-anchor-id="gaussian-mixture-model"><strong>4. Gaussian Mixture Model</strong></h4>
+<p>Gaussian Mixture Models (GMMs) models assume multiple Gaussian distributions, each representing a cluster. GMMs use a soft clustering approach, probabilistically assigning data points to different clusters. The algorithm comprises two steps: the Expectation (E) step and the Maximization (M) step.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="5_clusters_QGMM.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Src: <a href="https://www.kaggle.com/code/pythonkumar/clustering-k-means-dbscan-gmm-bgmm-dendogram-viz" class="uri">https://www.kaggle.com/code/pythonkumar/clustering-k-means-dbscan-gmm-bgmm-dendogram-viz</a></figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="kmodes-clustering-using-cardio-data" class="level2">
+<h2 class="anchored" data-anchor-id="kmodes-clustering-using-cardio-data">KModes Clustering using Cardio Data</h2>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">'darkgrid'</span>, font_scale<span class="op">=</span><span class="fl">1.4</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> kmodes.kmodes <span class="im">import</span> KModes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/post-with-code/cardio_train.csv'</span>, sep<span class="op">=</span><span class="st">";"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">height</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">ap_hi</th>
+<th data-quarto-table-cell-role="th">ap_lo</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">alco</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>18393</td>
+<td>2</td>
+<td>168</td>
+<td>62.0</td>
+<td>110</td>
+<td>80</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>20228</td>
+<td>1</td>
+<td>156</td>
+<td>85.0</td>
+<td>140</td>
+<td>90</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>18857</td>
+<td>1</td>
+<td>165</td>
+<td>64.0</td>
+<td>130</td>
+<td>70</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>17623</td>
+<td>2</td>
+<td>169</td>
+<td>82.0</td>
+<td>150</td>
+<td>100</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>17474</td>
+<td>1</td>
+<td>156</td>
+<td>56.0</td>
+<td>100</td>
+<td>60</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">69995</td>
+<td>99993</td>
+<td>19240</td>
+<td>2</td>
+<td>168</td>
+<td>76.0</td>
+<td>120</td>
+<td>80</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">69996</td>
+<td>99995</td>
+<td>22601</td>
+<td>1</td>
+<td>158</td>
+<td>126.0</td>
+<td>140</td>
+<td>90</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">69997</td>
+<td>99996</td>
+<td>19066</td>
+<td>2</td>
+<td>183</td>
+<td>105.0</td>
+<td>180</td>
+<td>90</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">69998</td>
+<td>99998</td>
+<td>22431</td>
+<td>1</td>
+<td>163</td>
+<td>72.0</td>
+<td>135</td>
+<td>80</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">69999</td>
+<td>99999</td>
+<td>20540</td>
+<td>1</td>
+<td>170</td>
+<td>72.0</td>
+<td>120</td>
+<td>80</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>70000 rows × 13 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#removing Outliers</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's remove weights and heights, that fall below 2.5% or above 97.5% of a given range.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df.drop(df[(df[<span class="st">'height'</span>] <span class="op">&gt;</span> df[<span class="st">'height'</span>].quantile(<span class="fl">0.975</span>)) <span class="op">|</span> (df[<span class="st">'height'</span>] <span class="op">&lt;</span> df[<span class="st">'height'</span>].quantile(<span class="fl">0.025</span>))].index,inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df.drop(df[(df[<span class="st">'weight'</span>] <span class="op">&gt;</span> df[<span class="st">'weight'</span>].quantile(<span class="fl">0.975</span>)) <span class="op">|</span> (df[<span class="st">'weight'</span>] <span class="op">&lt;</span> df[<span class="st">'weight'</span>].quantile(<span class="fl">0.025</span>))].index,inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Diastilic pressure is higher than systolic one in </span><span class="sc">{0}</span><span class="st"> cases"</span>.<span class="bu">format</span>(df[df[<span class="st">'ap_lo'</span>]<span class="op">&gt;</span> df[<span class="st">'ap_hi'</span>]].shape[<span class="dv">0</span>]))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.drop(df[(df[<span class="st">'ap_hi'</span>] <span class="op">&gt;</span> df[<span class="st">'ap_hi'</span>].quantile(<span class="fl">0.975</span>)) <span class="op">|</span> (df[<span class="st">'ap_hi'</span>] <span class="op">&lt;</span> df[<span class="st">'ap_hi'</span>].quantile(<span class="fl">0.025</span>))].index,inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df.drop(df[(df[<span class="st">'ap_lo'</span>] <span class="op">&gt;</span> df[<span class="st">'ap_lo'</span>].quantile(<span class="fl">0.975</span>)) <span class="op">|</span> (df[<span class="st">'ap_lo'</span>] <span class="op">&lt;</span> df[<span class="st">'ap_lo'</span>].quantile(<span class="fl">0.025</span>))].index,inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Diastilic pressure is higher than systolic one in 1082 cases</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">height</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">ap_hi</th>
+<th data-quarto-table-cell-role="th">ap_lo</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">alco</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+<td>60142.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>49895.698065</td>
+<td>19468.719979</td>
+<td>1.347311</td>
+<td>164.554854</td>
+<td>73.426805</td>
+<td>125.770526</td>
+<td>81.046307</td>
+<td>1.350953</td>
+<td>1.220229</td>
+<td>0.085631</td>
+<td>0.051877</td>
+<td>0.803648</td>
+<td>0.488228</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>28840.467755</td>
+<td>2460.510296</td>
+<td>0.476120</td>
+<td>6.830174</td>
+<td>11.614806</td>
+<td>13.761847</td>
+<td>8.239157</td>
+<td>0.670076</td>
+<td>0.567607</td>
+<td>0.279820</td>
+<td>0.221781</td>
+<td>0.397241</td>
+<td>0.499866</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0.000000</td>
+<td>10798.000000</td>
+<td>1.000000</td>
+<td>150.000000</td>
+<td>52.000000</td>
+<td>100.000000</td>
+<td>60.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>24867.500000</td>
+<td>17677.250000</td>
+<td>1.000000</td>
+<td>160.000000</td>
+<td>65.000000</td>
+<td>120.000000</td>
+<td>80.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>49902.500000</td>
+<td>19705.000000</td>
+<td>1.000000</td>
+<td>165.000000</td>
+<td>72.000000</td>
+<td>120.000000</td>
+<td>80.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>74745.750000</td>
+<td>21321.000000</td>
+<td>2.000000</td>
+<td>169.000000</td>
+<td>80.000000</td>
+<td>135.000000</td>
+<td>90.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>99999.000000</td>
+<td>23713.000000</td>
+<td>2.000000</td>
+<td>180.000000</td>
+<td>106.000000</td>
+<td>163.000000</td>
+<td>100.000000</td>
+<td>3.000000</td>
+<td>3.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transforming the column AGE(measured in days) for Years</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'years'</span>] <span class="op">=</span> (df[<span class="st">'age'</span>] <span class="op">/</span> <span class="dv">365</span>).<span class="bu">round</span>().astype(<span class="st">'int'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df.drop([<span class="st">'age'</span>], axis<span class="op">=</span><span class="st">'columns'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df.drop([<span class="st">'id'</span>], axis<span class="op">=</span><span class="st">'columns'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># age_bin in quinquenium 5 years spam</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'age_bin'</span>] <span class="op">=</span> pd.cut(df[<span class="st">'years'</span>], [<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">35</span>,<span class="dv">40</span>,<span class="dv">45</span>,<span class="dv">50</span>,<span class="dv">55</span>,<span class="dv">60</span>,<span class="dv">65</span>,<span class="dv">70</span>,<span class="dv">75</span>,<span class="dv">80</span>,<span class="dv">85</span>,<span class="dv">90</span>,<span class="dv">95</span>,<span class="dv">100</span>], </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                              labels<span class="op">=</span>[<span class="st">'0-20'</span>, <span class="st">'20-30'</span>, <span class="st">'30-35'</span>, <span class="st">'35-40'</span>,<span class="st">'40-45'</span>,<span class="st">'45-50'</span>,<span class="st">'50-55'</span>,<span class="st">'55-60'</span>,<span class="st">'60-65'</span>,<span class="st">'65-70'</span>,<span class="st">'70-75'</span>,<span class="st">'75-80'</span>,<span class="st">'80-85'</span>,<span class="st">'85-90'</span>,<span class="st">'90-95'</span>,<span class="st">'95-100'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding Body Mass Index</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'bmi'</span>] <span class="op">=</span> df[<span class="st">'weight'</span>]<span class="op">/</span>((df[<span class="st">'height'</span>]<span class="op">/</span><span class="dv">100</span>)<span class="op">**</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transforming the column bmi in Body Mass Index Classes (1 to 6)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rating <span class="op">=</span> []</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> df[<span class="st">'bmi'</span>]:</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row <span class="op">&lt;</span> <span class="fl">18.5</span> :    rating.append(<span class="dv">1</span>) <span class="co">#UnderWeight</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">18.5</span> <span class="kw">and</span> row  <span class="op">&lt;</span> <span class="fl">24.9</span>:   rating.append(<span class="dv">2</span>)<span class="co">#NormalWeight</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">24.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">29.9</span>:  rating.append(<span class="dv">3</span>)<span class="co">#OverWeight</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">29.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">34.9</span>:  rating.append(<span class="dv">4</span>)<span class="co">#ClassObesity_1</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">34.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">39.9</span>:  rating.append(<span class="dv">5</span>)<span class="co">#ClassObesity_2</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">39.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">49.9</span>:  rating.append(<span class="dv">6</span>)<span class="co">#ClassObesity_3</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">49.9</span>:  rating.append(<span class="st">'Error'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:           rating.append(<span class="st">'Not_Rated'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'BMI_Class'</span>] <span class="op">=</span> rating</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"BMI_Class"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>BMI_Class
+3    0.391773
+2    0.361943
+4    0.179209
+5    0.055801
+6    0.009162
+1    0.002112
+Name: proportion, dtype: float64</code></pre>
+</div>
+</div>
+<p>Mean Arterial Pressure (MAP) = 2 Diastollic Blood Pressure + Sistolic Blood Pressure / 3</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'MAP'</span>] <span class="op">=</span> ((<span class="dv">2</span><span class="op">*</span> df[<span class="st">'ap_lo'</span>]) <span class="op">+</span> df[<span class="st">'ap_hi'</span>]) <span class="op">/</span> <span class="dv">3</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating Classes for MAP</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>map_values <span class="op">=</span> []</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> df[<span class="st">'MAP'</span>]:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row <span class="op">&lt;</span> <span class="fl">69.9</span>:    map_values.append(<span class="dv">1</span>) <span class="co">#Low</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="dv">70</span> <span class="kw">and</span> row  <span class="op">&lt;</span> <span class="fl">79.9</span>:   map_values.append(<span class="dv">2</span>)<span class="co">#Normal</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">79.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">89.9</span>:  map_values.append(<span class="dv">3</span>)<span class="co">#Normal</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">89.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">99.9</span>:  map_values.append(<span class="dv">4</span>)<span class="co">#Normal</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">99.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">109.9</span>:  map_values.append(<span class="dv">5</span>)<span class="co">#High</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">109.9</span> <span class="kw">and</span> row <span class="op">&lt;</span> <span class="fl">119.9</span>:  map_values.append(<span class="dv">6</span>)<span class="co">#Normal</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row <span class="op">&gt;</span> <span class="fl">119.9</span>:  map_values.append(<span class="dv">7</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:           map_values.append(<span class="st">'Not_Rated'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#inserting MAP_Class Column</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'MAP_Class'</span>] <span class="op">=</span> map_values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reordering Columns</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span> df[[<span class="st">"gender"</span>,<span class="st">"height"</span>,<span class="st">"weight"</span>,<span class="st">"bmi"</span>,<span class="st">"ap_hi"</span>,<span class="st">"ap_lo"</span>,<span class="st">"MAP"</span>,<span class="st">"years"</span>,<span class="st">"age_bin"</span>,<span class="st">"BMI_Class"</span>,<span class="st">"MAP_Class"</span>,<span class="st">"cholesterol"</span>,<span class="st">"gluc"</span>,<span class="st">"smoke"</span>,<span class="st">"active"</span>,<span class="st">"cardio"</span>]]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">height</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">bmi</th>
+<th data-quarto-table-cell-role="th">ap_hi</th>
+<th data-quarto-table-cell-role="th">ap_lo</th>
+<th data-quarto-table-cell-role="th">MAP</th>
+<th data-quarto-table-cell-role="th">years</th>
+<th data-quarto-table-cell-role="th">age_bin</th>
+<th data-quarto-table-cell-role="th">BMI_Class</th>
+<th data-quarto-table-cell-role="th">MAP_Class</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2</td>
+<td>168</td>
+<td>62.0</td>
+<td>21.967120</td>
+<td>110</td>
+<td>80</td>
+<td>90.000000</td>
+<td>50</td>
+<td>45-50</td>
+<td>2</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>156</td>
+<td>85.0</td>
+<td>34.927679</td>
+<td>140</td>
+<td>90</td>
+<td>106.666667</td>
+<td>55</td>
+<td>50-55</td>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>165</td>
+<td>64.0</td>
+<td>23.507805</td>
+<td>130</td>
+<td>70</td>
+<td>90.000000</td>
+<td>52</td>
+<td>50-55</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2</td>
+<td>169</td>
+<td>82.0</td>
+<td>28.710479</td>
+<td>150</td>
+<td>100</td>
+<td>116.666667</td>
+<td>48</td>
+<td>45-50</td>
+<td>3</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>156</td>
+<td>56.0</td>
+<td>23.011177</td>
+<td>100</td>
+<td>60</td>
+<td>73.333333</td>
+<td>48</td>
+<td>45-50</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="data-analize-and-preparation" class="level4">
+<h4 class="anchored" data-anchor-id="data-analize-and-preparation">Data Analize and Preparation</h4>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_cat <span class="op">=</span> df[[<span class="st">"gender"</span>,<span class="st">"age_bin"</span>,<span class="st">"BMI_Class"</span>,<span class="st">"MAP_Class"</span>,<span class="st">"cholesterol"</span>,<span class="st">"gluc"</span>,<span class="st">"smoke"</span>,<span class="st">"active"</span>,<span class="st">"cardio"</span>,]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> preprocessing.LabelEncoder()</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df_cat <span class="op">=</span> df_cat.<span class="bu">apply</span>(le.fit_transform)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df_cat.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">age_bin</th>
+<th data-quarto-table-cell-role="th">BMI_Class</th>
+<th data-quarto-table-cell-role="th">MAP_Class</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_male <span class="op">=</span> df_cat.query(<span class="st">"gender == 0"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_female <span class="op">=</span> df_cat.query(<span class="st">"gender == 1"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_male.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">age_bin</th>
+<th data-quarto-table-cell-role="th">BMI_Class</th>
+<th data-quarto-table-cell-role="th">MAP_Class</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>0</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>0</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize <span class="op">=</span> (<span class="dv">12</span>,<span class="dv">5</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_cat[<span class="st">'MAP_Class'</span>],order<span class="op">=</span>df_cat[<span class="st">'MAP_Class'</span>].value_counts().index,hue<span class="op">=</span>df_cat[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'MAP_Class'</span>],order<span class="op">=</span>df_male[<span class="st">'MAP_Class'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'MAP_Class'</span>],order<span class="op">=</span>df_female[<span class="st">'MAP_Class'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">2</span>])</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'All Data'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Male Data'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_title(<span class="st">'Female Data'</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-17-output-1.png" width="1124" height="453"></p>
+</div>
+</div>
+<p>All the values are similar</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize <span class="op">=</span> (<span class="dv">12</span>,<span class="dv">5</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_cat[<span class="st">'BMI_Class'</span>],order<span class="op">=</span>df_cat[<span class="st">'BMI_Class'</span>].value_counts().index,hue<span class="op">=</span>df_cat[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'BMI_Class'</span>],order<span class="op">=</span>df_male[<span class="st">'BMI_Class'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'BMI_Class'</span>],order<span class="op">=</span>df_female[<span class="st">'BMI_Class'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">2</span>])</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'All Data'</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Male Data'</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_title(<span class="st">'Female Data'</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-18-output-1.png" width="1124" height="453"></p>
+</div>
+</div>
+<p>The BMI classes across all data, as well as for males and females, are quite similar. However, there’s a slight variance in the BMI_Class = 2 specifically for the female dataset.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize <span class="op">=</span> (<span class="dv">12</span>,<span class="dv">5</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_cat[<span class="st">'gluc'</span>],order<span class="op">=</span>df_cat[<span class="st">'gluc'</span>].value_counts().index,hue<span class="op">=</span>df_cat[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'gluc'</span>],order<span class="op">=</span>df_male[<span class="st">'gluc'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'gluc'</span>],order<span class="op">=</span>df_female[<span class="st">'gluc'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">2</span>])</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'All Data'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Male Data'</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_title(<span class="st">'Female Data'</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-19-output-1.png" width="1124" height="453"></p>
+</div>
+</div>
+<p>All the values are similar</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize <span class="op">=</span> (<span class="dv">12</span>,<span class="dv">5</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_cat[<span class="st">'cholesterol'</span>],order<span class="op">=</span>df_cat[<span class="st">'cholesterol'</span>].value_counts().index,hue<span class="op">=</span>df_cat[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'cholesterol'</span>],order<span class="op">=</span>df_male[<span class="st">'cholesterol'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'cholesterol'</span>],order<span class="op">=</span>df_female[<span class="st">'cholesterol'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">2</span>])</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'All Data'</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Male Data'</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_title(<span class="st">'Female Data'</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-1.png" width="1124" height="453"></p>
+</div>
+</div>
+<p>All the values are similar</p>
+</section>
+<section id="kmodes-clustering-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="kmodes-clustering-analysis">KModes Clustering Analysis</h3>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># new df to work</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df_male <span class="op">=</span> df_cat.query(<span class="st">"gender == 0"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df_female <span class="op">=</span> df_cat.query(<span class="st">"gender == 1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Elbow curve to find optimal K in Huang init</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cost <span class="op">=</span> []</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">6</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> num_clusters <span class="kw">in</span> <span class="bu">list</span>(K):</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    kmode <span class="op">=</span> KModes(n_clusters<span class="op">=</span>num_clusters, init <span class="op">=</span> <span class="st">"Huang"</span>, n_init <span class="op">=</span> <span class="dv">5</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    kmode.fit_predict(df_cat)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    cost.append(kmode.cost_)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.plot(K, cost, <span class="st">'bx-'</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'No. of clusters'</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Cost'</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Elbow Method For Optimal k'</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-22-output-1.png" width="658" height="473"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># female data</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the model with using K-Mode with "Huang" initialization</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>km_huang <span class="op">=</span> KModes(n_clusters<span class="op">=</span><span class="dv">2</span>, init <span class="op">=</span> <span class="st">"Huang"</span>, n_init <span class="op">=</span> <span class="dv">5</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>clusters_huang_1 <span class="op">=</span> km_huang.fit_predict(df_female)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>clusters_huang_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>array([1, 0, 0, ..., 0, 1, 1], dtype=uint16)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># male data</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the model with using K-Mode with "Huang" initialization</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>km_huang <span class="op">=</span> KModes(n_clusters<span class="op">=</span><span class="dv">2</span>, init <span class="op">=</span> <span class="st">"Huang"</span>, n_init <span class="op">=</span> <span class="dv">5</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>clusters_huang_2 <span class="op">=</span> km_huang.fit_predict(df_male)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>clusters_huang_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>array([0, 1, 1, ..., 0, 0, 0], dtype=uint16)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_female.insert(<span class="dv">0</span>,<span class="st">"Cluster"</span>, clusters_huang_1, <span class="va">True</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># female DataFrame with Clusters</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>df_female.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Cluster</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">age_bin</th>
+<th data-quarto-table-cell-role="th">BMI_Class</th>
+<th data-quarto-table-cell-role="th">MAP_Class</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">7</td>
+<td>0</td>
+<td>1</td>
+<td>6</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_male.insert(<span class="dv">0</span>, <span class="st">"Cluster"</span>, clusters_huang_2, <span class="va">True</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># female DataFrame with Clusters</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>df_male.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Cluster</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">age_bin</th>
+<th data-quarto-table-cell-role="th">BMI_Class</th>
+<th data-quarto-table-cell-role="th">MAP_Class</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>1</td>
+<td>0</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replacing cluster column values to merge dataframes after</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_male[<span class="st">"Cluster"</span>].replace({<span class="dv">0</span>:<span class="dv">2</span>, <span class="dv">1</span>:<span class="dv">3</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>df_male.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_23416/1028254110.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df_male["Cluster"].replace({0:2, 1:3}, inplace=True)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Cluster</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">age_bin</th>
+<th data-quarto-table-cell-role="th">BMI_Class</th>
+<th data-quarto-table-cell-role="th">MAP_Class</th>
+<th data-quarto-table-cell-role="th">cholesterol</th>
+<th data-quarto-table-cell-role="th">gluc</th>
+<th data-quarto-table-cell-role="th">smoke</th>
+<th data-quarto-table-cell-role="th">active</th>
+<th data-quarto-table-cell-role="th">cardio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>0</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2</td>
+<td>0</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>3</td>
+<td>0</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># female</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize <span class="op">=</span> (<span class="dv">12</span>,<span class="dv">5</span>))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'Cluster'</span>],order<span class="op">=</span>df_female[<span class="st">'Cluster'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">0</span>],palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'smoke'</span>],order<span class="op">=</span>df_female[<span class="st">'smoke'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">1</span>],palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_female[<span class="st">'BMI_Class'</span>],order<span class="op">=</span>df_female[<span class="st">'BMI_Class'</span>].value_counts().index,hue<span class="op">=</span>df_female[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">2</span>],palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-28-output-1.png" width="1124" height="452"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># male</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize <span class="op">=</span> (<span class="dv">12</span>,<span class="dv">5</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'Cluster'</span>],order<span class="op">=</span>df_male[<span class="st">'Cluster'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">0</span>],palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'smoke'</span>],order<span class="op">=</span>df_male[<span class="st">'smoke'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">1</span>],palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>df_male[<span class="st">'BMI_Class'</span>],order<span class="op">=</span>df_male[<span class="st">'BMI_Class'</span>].value_counts().index,hue<span class="op">=</span>df_male[<span class="st">'cardio'</span>],ax<span class="op">=</span>axs[<span class="dv">2</span>],palette<span class="op">=</span><span class="st">'rainbow'</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-29-output-1.png" width="1124" height="452"></p>
+</div>
+</div>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
