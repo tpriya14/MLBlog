@@ -1,5 +1,7 @@
 ---
-title: "Tahmina Sultana Priya"
+title: "Machine Learning is Everywhere"
+description: "Machine learning is a powerful subset of artificial intelligence that empowers machines to learn patterns from data and make predictions or decisions without explicit programming. It involves algorithms that iteratively learn from data, recognize patterns, and improve over time. From recommendation systems and natural language processing to image recognition and autonomous vehicles, machine learning is revolutionizing various industries, continually evolving to solve complex problems and enhance our technological landscape. The field encompasses supervised learning, unsupervised learning, and reinforcement learning, driving innovations that reshape how we interact with technology in our daily lives.To create a significant influence within organizations, AI and ML must gain comprehension and trust. Exploring reputable ML blogs authored by experts at varying skill levels can boost readers' understanding and confidence in these domains."
+
 listing:
   - id: posts-en
     contents: posts/**/en/*.qmd
@@ -54,7 +56,9 @@ comments: false
 toc: true
 ---
 
-## Recent posts
+![](ml-e1610553826718.jpg){fig-align="center" width="644" height="277"}
+
+## Blogs Related to Machine Learning Concept
 
 ::: {#posts}
 :::
