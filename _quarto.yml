@@ -4,6 +4,8 @@ project:
 
 website:
   title: "MLBlog"
+  repo-url: https://github.com/tpriya14
+  repo-actions: [source]
   navbar:
     right:
       - about.qmd
