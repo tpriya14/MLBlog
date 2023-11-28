@@ -4,13 +4,11 @@ project:
 
 website:
   title: "MLBlog"
-  repo-url: https://github.com/tpriya14/MLBlog/tree/gh-pages
-  repo-actions: [source]
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/tpriya14
+        href: https://github.com/tpriya14/MLBlog
       - icon: twitter
         href: https://twitter.com/tspriya14
 format:
