@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Classification</h1>
+      <div class="quarto-title-block"><div><h1 class="title">Classification</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
           Classification in Machine Learning involves the process of assigning predefined categories or labels to data points based on their features, enabling algorithms to learn and predict the class of new, unseen instances.
@@ -1000,6 +1000,8 @@ weighted avg       0.87      0.87      0.87       184
 </div>
 
 
+<!-- -->
+
 </section>
 </section>
 
@@ -1083,6 +1085,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -1236,9 +1289,379 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb28" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Classification"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Tahmina Sultana"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-11-24"</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [python, code, analysis]</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "img1.webp"</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Classification in Machine Learning involves the process of assigning predefined categories or labels to data points based on their features, enabling algorithms to learn and predict the class of new, unseen instances."</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="al">![Machine Learning Algorithms for Classification (src: &lt;https://towardsdatascience.com/top-machine-learning-algorithms-for-classification-2197870ff501&gt;)](img.webp)</span>{fig-alt="Machine Learning Algorithms for Classification (src: https://towardsdatascience.com/top-machine-learning-algorithms-for-classification-2197870ff501)"}</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>**Contents:**</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Introduction to Classification.</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Different types of classification.</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Example of Linear Regression with <span class="co">[</span><span class="ot">Heart Failure Prediction dataset</span><span class="co">](https://www.kaggle.com/code/ratndeepchavan/prediction-of-heart-failure/input?select=heart.csv)</span>.</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Data Visualization</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Data processing</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Model implementation</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Evaluation metrics implementation</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction to Classification</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>In the dynamic world of machine learning, classification stands out as a pivotal concept, providing the ability to categorize and interpret data for a wide array of applications. Whether you're looking to filter spam emails, identify diseases from medical data, or recognize handwritten digits, classification algorithms are your go-to tools. In this blog post, we'll delve into what classification is in machine learning, its significance, and how it's transforming industries.</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Defining Classification in Machine Learning</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>At its core, classification is the process of recognizing, understanding, and grouping data into predefined categories or subgroups. It's like having a smart assistant that can look at a new piece of data and tell you which group it belongs to based on its characteristics. This task is accomplished through the analysis of historical data, which serves as a training ground for machine learning models.</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Power of Predefined Categories</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>The magic of classification lies in these predefined categories. Think of them as labels, such as "spam" and "non-spam" for emails, "fraudulent" and "legitimate" for financial transactions, or "cat" and "dog" for image recognition. The ability to organize data into these categories enables decision-making, automation, and insights that would otherwise be impractical or impossible to achieve manually.</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## How Classification Works</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>To perform classification, machine learning algorithms need to learn from data first. This "training" phase involves feeding the algorithm a labeled dataset, where each data point is associated with the category it belongs to. The algorithm then learns the patterns, relationships, and features that characterize each category.</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>Once trained, the algorithm can classify new, unseen data by assessing its similarity to the patterns it has learned. It predicts the likelihood of the new data point falling into one of the predefined categories. This process is akin to your email provider recognizing whether an incoming email is spam or not based on past experiences.</span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Real-Life Applications</span></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>Classification has found its way into countless real-world applications. From medical diagnoses to recommendation systems, here are a few examples:</span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Medical Diagnoses**: Doctors use machine learning models to predict whether a patient has a particular disease based on symptoms, medical history, and test results.</span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Recommendation Systems**: Companies like Netflix and Amazon employ classification to recommend movies or products to users based on their preferences and behavior.</span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sentiment Analysis**: Social media platforms analyze posts to classify them as positive, negative, or neutral, providing valuable insights into public opinion.</span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Image Recognition**: In the field of computer vision, classification helps identify objects, animals, or handwritten text in images.</span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="fu">### Popular Classification Algorithms:</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Logistic Regression</span><span class="co">](https://monkeylearn.com/blog/classification-algorithms/#logistic-regression)</span>: Logistic regression is a widely used classification algorithm that models the probability of an input belonging to a particular category. It's simple, interpretable, and effective for binary and multiclass classification tasks.</span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Naive Bayes</span><span class="co">](https://monkeylearn.com/blog/classification-algorithms/#naive-bayes)</span>: Naive Bayes is a probabilistic classification algorithm based on Bayes' theorem. It's particularly suited for text classification tasks and spam email filtering, where it assumes independence between features.</span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">K-Nearest Neighbors</span><span class="co">](https://monkeylearn.com/blog/classification-algorithms/#knn)</span>: K-NN is a straightforward yet powerful algorithm that classifies data points based on the majority class among their k-nearest neighbors. It's versatile and can be applied to various types of data, but the choice of k is crucial for its performance.</span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Decision Tree</span><span class="co">](https://monkeylearn.com/blog/classification-algorithms/#decision-tree)</span>: Decision tree classifiers make decisions by splitting data based on features, creating a tree-like structure of decisions. They are interpretable and can handle both categorical and numerical data, making them useful in many applications.</span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">Support Vector Machines</span><span class="co">](https://monkeylearn.com/blog/classification-algorithms/#svm)</span>: SVMs are effective for both linear and nonlinear classification tasks. They work by finding the optimal hyperplane that maximizes the margin between classes, making them robust against overfitting and suitable for high-dimensional data.</span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example: Heart Disease Prediction</span></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd </span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns </span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, precision_recall_curve</span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, roc_auc_score, roc_curve, f1_score, accuracy_score</span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> make_scorer, precision_score, precision_recall_curve</span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> recall_score</span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a>sns.set_theme(context<span class="op">=</span><span class="st">'notebook'</span>,</span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a>              style<span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>              palette<span class="op">=</span><span class="st">'deep'</span>,</span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>              font_scale<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a>              color_codes<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a>              rc<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">14</span>,<span class="dv">8</span>) </span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.facecolor'</span>] <span class="op">=</span> <span class="st">'#F0F8FF'</span></span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.titlesize'</span>] <span class="op">=</span> <span class="st">'medium'</span></span>
+<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.dpi'</span>] <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.edgecolor'</span>] <span class="op">=</span> <span class="st">'green'</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.frameon'</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"figure.autolayout"</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.facecolor'</span>] <span class="op">=</span> <span class="st">'#F5F5DC'</span></span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.titlesize'</span>] <span class="op">=</span> <span class="dv">25</span>   </span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.titleweight"</span>] <span class="op">=</span> <span class="st">'normal'</span></span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.titlecolor"</span>] <span class="op">=</span> <span class="st">'Olive'</span></span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.edgecolor'</span>] <span class="op">=</span> <span class="st">'pink'</span></span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.linewidth"</span>] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.grid"</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.titlelocation'</span>] <span class="op">=</span> <span class="st">'center'</span> </span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.labelsize"</span>] <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.labelpad"</span>] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.labelweight'</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.labelcolor"</span>] <span class="op">=</span> <span class="st">'Olive'</span></span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.axisbelow"</span>] <span class="op">=</span> <span class="va">False</span> </span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.xmargin'</span>] <span class="op">=</span> <span class="fl">.2</span></span>
+<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"axes.ymargin"</span>] <span class="op">=</span> <span class="fl">.2</span></span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"xtick.bottom"</span>] <span class="op">=</span> <span class="va">True</span> </span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'xtick.color'</span>] <span class="op">=</span> <span class="st">'#A52A2A'</span></span>
+<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"ytick.left"</span>] <span class="op">=</span> <span class="va">True</span>  </span>
+<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'ytick.color'</span>] <span class="op">=</span> <span class="st">'#A52A2A'</span></span>
+<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.grid'</span>] <span class="op">=</span> <span class="va">True</span> </span>
+<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'grid.color'</span>] <span class="op">=</span> <span class="st">'green'</span></span>
+<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'grid.linestyle'</span>] <span class="op">=</span> <span class="st">'--'</span> </span>
+<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'grid.linewidth'</span>] <span class="op">=</span> <span class="fl">.5</span></span>
+<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'grid.alpha'</span>] <span class="op">=</span> <span class="fl">.3</span>       </span>
+<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.loc'</span>] <span class="op">=</span> <span class="st">'best'</span> </span>
+<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.facecolor'</span>] <span class="op">=</span>  <span class="st">'NavajoWhite'</span>  </span>
+<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.edgecolor'</span>] <span class="op">=</span> <span class="st">'pink'</span></span>
+<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.shadow'</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'legend.fontsize'</span>] <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.size'</span>] <span class="op">=</span> <span class="dv">14</span></span>
+<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.dpi'</span>] <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.edgecolor'</span>] <span class="op">=</span> <span class="st">'Blue'</span></span>
+<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>,<span class="va">None</span>)</span>
+<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>,<span class="va">None</span>)</span>
+<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.precision"</span>, <span class="dv">2</span>)</span>
+<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a>heart1 <span class="op">=</span> pd.read_csv(<span class="st">'/home/tpriya/CS5525/MLBlog/posts/classification/heart.csv'</span>)</span>
+<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a>heart1.head()</span>
+<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a>**Attributes:**</span>
+<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Age:** Age of the patient <span class="sc">\[</span>years<span class="sc">\]</span></span>
+<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sex:** Sex of the patient <span class="sc">\[</span>M: Male, F: Female<span class="sc">\]</span></span>
+<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**ChestPainType:** Chest Pain Type <span class="sc">\[</span>TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic<span class="sc">\]</span></span>
+<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RestingBP:** Resting blood pressure <span class="sc">\[</span>mm Hg<span class="sc">\]</span></span>
+<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Cholesterol:** Serum cholesterol <span class="sc">\[</span>mm/dl<span class="sc">\]</span></span>
+<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**FastingBS:** Fasting blood sugar <span class="sc">\[</span>1: if FastingBS <span class="sc">\&gt;</span> 120 mg/dl, 0: otherwise<span class="sc">\]</span></span>
+<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**RestingECG**: Resting electrocardiogram results <span class="sc">\[</span>Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of <span class="sc">\&gt;</span> 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria<span class="sc">\]</span></span>
+<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**MaxHR:** Maximum heart rate achieved <span class="sc">\[</span>Numeric value between 60 and 202<span class="sc">\]</span></span>
+<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**ExerciseAngina:** Exercise-induced angina <span class="sc">\[</span>Y: Yes, N: No<span class="sc">\]</span></span>
+<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Oldpeak:** Oldpeak = ST <span class="sc">\[</span>Numeric value measured in depression<span class="sc">\]</span></span>
+<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**ST_Slope:** The slope of the peak exercise ST segment <span class="sc">\[</span>Up: upsloping, Flat: flat, Down: downsloping<span class="sc">\]</span></span>
+<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**HeartDisease:** Output class <span class="sc">\[</span>1: heart disease, 0: Normal<span class="sc">\]</span></span>
+<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a>heart1.info()</span>
+<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a>heart1.describe()</span>
+<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a>heart1.isnull().mean()<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a>Women <span class="op">=</span> heart1.loc[heart1[<span class="st">'Sex'</span>] <span class="op">==</span> <span class="st">'F'</span>][<span class="st">"HeartDisease"</span>]</span>
+<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a>rate_women <span class="op">=</span> (Women.<span class="bu">sum</span>()<span class="op">/</span><span class="bu">len</span>(Women)).<span class="bu">round</span>(<span class="dv">2</span>)<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Percentage of Women with probability of HeartDisease:"</span>, rate_women,<span class="st">"%"</span>)</span>
+<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a>Men <span class="op">=</span> heart1.loc[heart1[<span class="st">'Sex'</span>] <span class="op">==</span> <span class="st">'M'</span>][<span class="st">"HeartDisease"</span>]</span>
+<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a>rate_men <span class="op">=</span> (Men.<span class="bu">sum</span>()<span class="op">/</span><span class="bu">len</span>(Men)).<span class="bu">round</span>(<span class="dv">2</span>)<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Percentage of Men with probability of HeartDisease  :"</span>, rate_men,<span class="st">"%"</span>)</span>
+<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'We have </span><span class="sc">{</span>heart1<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> instances with the </span><span class="sc">{</span>heart1<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="op">-</span><span class="dv">1</span><span class="sc">}</span><span class="ss"> features and 1 output variable'</span>)</span>
+<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a><span class="co">## Combining Data</span></span>
+<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a>heart1.agg(</span>
+<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Age"</span>: [<span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"median"</span>,<span class="st">"mean"</span>, <span class="st">"skew"</span>, <span class="st">'std'</span>],</span>
+<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a>        <span class="st">"RestingBP"</span>: [<span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"median"</span>, <span class="st">"mean"</span>,<span class="st">"skew"</span>,<span class="st">'std'</span>],</span>
+<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Cholesterol"</span>: [<span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"median"</span>, <span class="st">"mean"</span>,<span class="st">"skew"</span>,<span class="st">'std'</span>],</span>
+<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Oldpeak"</span>: [<span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"median"</span>, <span class="st">"mean"</span>,<span class="st">"skew"</span>,<span class="st">'std'</span>],</span>
+<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a>        <span class="st">"MaxHR"</span>: [<span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"median"</span>, <span class="st">"mean"</span>,<span class="st">"skew"</span>,<span class="st">'std'</span>]</span>
+<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a>sns.kdeplot( data<span class="op">=</span>heart1, x<span class="op">=</span><span class="st">"Cholesterol"</span>, hue<span class="op">=</span><span class="st">"ChestPainType"</span>, fill<span class="op">=</span><span class="va">True</span>, common_norm<span class="op">=</span><span class="va">False</span>, palette<span class="op">=</span><span class="st">"tab10"</span>, alpha<span class="op">=</span><span class="fl">.5</span>, linewidth<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a>sns.displot(data<span class="op">=</span>heart1, x<span class="op">=</span><span class="st">"Cholesterol"</span>, hue<span class="op">=</span><span class="st">"ChestPainType"</span>, col<span class="op">=</span><span class="st">"Sex"</span>, kind<span class="op">=</span><span class="st">"kde"</span>)<span class="op">;</span></span>
+<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a>heart1.nunique().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'No of unique values in the dataset'</span>)</span>
+<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a>**Outliers in Data**</span>
+<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a>Outliers represent atypical data points that have the potential to disrupt statistical analyses and challenge their underlying assumptions. Dealing with outliers is a common task for analysts, and deciding how to handle them can be a complex process. While the instinct may be to eliminate outliers to mitigate their impact, this approach is appropriate only in certain circumstances and should not be the default choice</span>
+<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">20</span>))</span>
+<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Age'</span>],color<span class="op">=</span><span class="st">'DeepPink'</span>)</span>
+<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Age'</span>],color<span class="op">=</span><span class="st">'DeepPink'</span>)</span>
+<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'RestingBP'</span>],color<span class="op">=</span><span class="st">'DarkSlateGray'</span>)</span>
+<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb28-283"><a href="#cb28-283" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'RestingBP'</span>],color<span class="op">=</span><span class="st">'DarkSlateGray'</span>)</span>
+<span id="cb28-284"><a href="#cb28-284" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">5</span>)</span>
+<span id="cb28-285"><a href="#cb28-285" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Cholesterol'</span>],color<span class="op">=</span><span class="st">'Green'</span>)</span>
+<span id="cb28-286"><a href="#cb28-286" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">6</span>)</span>
+<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Cholesterol'</span>],color<span class="op">=</span><span class="st">'Green'</span>)</span>
+<span id="cb28-288"><a href="#cb28-288" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">7</span>)</span>
+<span id="cb28-289"><a href="#cb28-289" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'MaxHR'</span>],color<span class="op">=</span><span class="st">'Red'</span>)</span>
+<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">8</span>)</span>
+<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'MaxHR'</span>],color<span class="op">=</span><span class="st">'Red'</span>)</span>
+<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>)</span>
+<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a>sns.distplot(heart1[<span class="st">'Oldpeak'</span>],color<span class="op">=</span><span class="st">'Brown'</span>)</span>
+<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">10</span>)</span>
+<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a>sns.boxplot(heart1[<span class="st">'Oldpeak'</span>],color<span class="op">=</span><span class="st">'Brown'</span>)</span>
+<span id="cb28-296"><a href="#cb28-296" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb28-297"><a href="#cb28-297" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb28-298"><a href="#cb28-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a><span class="co">#assigning values to features as X and target as y</span></span>
+<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>heart1.drop([<span class="st">"HeartDisease"</span>],axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb28-306"><a href="#cb28-306" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>heart1[<span class="st">"HeartDisease"</span>]</span>
+<span id="cb28-307"><a href="#cb28-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-308"><a href="#cb28-308" aria-hidden="true" tabindex="-1"></a><span class="co">#Set up a standard scaler for the features</span></span>
+<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a>col_names <span class="op">=</span> <span class="bu">list</span>(X.columns)</span>
+<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb28-311"><a href="#cb28-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-312"><a href="#cb28-312" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> X.columns:</span>
+<span id="cb28-315"><a href="#cb28-315" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> pd.api.types.is_numeric_dtype(X[col]):</span>
+<span id="cb28-316"><a href="#cb28-316" aria-hidden="true" tabindex="-1"></a>        X[col] <span class="op">=</span> le.fit_transform(X[col])</span>
+<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-318"><a href="#cb28-318" aria-hidden="true" tabindex="-1"></a>s_scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb28-319"><a href="#cb28-319" aria-hidden="true" tabindex="-1"></a>X_df<span class="op">=</span> s_scaler.fit_transform(X)</span>
+<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a>X_df <span class="op">=</span> pd.DataFrame(X_df, columns<span class="op">=</span>col_names)   </span>
+<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a>X_df.describe().T</span>
+<span id="cb28-322"><a href="#cb28-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-323"><a href="#cb28-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a>X_train,X_test,y_train,y_test <span class="op">=</span> train_test_split(X_df,y,test_size<span class="op">=</span><span class="fl">0.2</span>,random_state<span class="op">=</span><span class="dv">21</span>)</span>
+<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
+<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a>X_train<span class="op">=</span>scaler.fit_transform(X_train)</span>
+<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a>X_test<span class="op">=</span>scaler.transform(X_test)</span>
+<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.DataFrame(X_train, columns<span class="op">=</span>X.columns)</span>
+<span id="cb28-340"><a href="#cb28-340" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.DataFrame(X_test, columns<span class="op">=</span>X.columns)</span>
+<span id="cb28-341"><a href="#cb28-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-342"><a href="#cb28-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-343"><a href="#cb28-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-344"><a href="#cb28-344" aria-hidden="true" tabindex="-1"></a><span class="fu">### KNN Classifier</span></span>
+<span id="cb28-345"><a href="#cb28-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-348"><a href="#cb28-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-349"><a href="#cb28-349" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb28-350"><a href="#cb28-350" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">8</span>,<span class="dv">6</span>)</span>
+<span id="cb28-351"><a href="#cb28-351" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.size'</span>] <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb28-352"><a href="#cb28-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-353"><a href="#cb28-353" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score,confusion_matrix,classification_report,f1_score</span>
+<span id="cb28-354"><a href="#cb28-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-355"><a href="#cb28-355" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsClassifier()</span>
+<span id="cb28-356"><a href="#cb28-356" aria-hidden="true" tabindex="-1"></a>knn.fit(X_train, y_train)</span>
+<span id="cb28-357"><a href="#cb28-357" aria-hidden="true" tabindex="-1"></a>y_pred_log <span class="op">=</span> knn.predict(X_test)</span>
+<span id="cb28-358"><a href="#cb28-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-359"><a href="#cb28-359" aria-hidden="true" tabindex="-1"></a>log_train <span class="op">=</span> <span class="bu">round</span>(knn.score(X_train, y_train) <span class="op">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb28-360"><a href="#cb28-360" aria-hidden="true" tabindex="-1"></a>log_accuracy <span class="op">=</span> <span class="bu">round</span>(accuracy_score(y_pred_log, y_test) <span class="op">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb28-361"><a href="#cb28-361" aria-hidden="true" tabindex="-1"></a>log_f1 <span class="op">=</span> <span class="bu">round</span>(f1_score(y_pred_log, y_test) <span class="op">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb28-362"><a href="#cb28-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-363"><a href="#cb28-363" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Accuracy    :"</span>,log_train,<span class="st">"%"</span>)</span>
+<span id="cb28-364"><a href="#cb28-364" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Accuracy Score :"</span>,log_accuracy,<span class="st">"%"</span>)</span>
+<span id="cb28-365"><a href="#cb28-365" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[1m--------------------------------------------------------</span><span class="ch">\033</span><span class="st">[0m"</span>)</span>
+<span id="cb28-366"><a href="#cb28-366" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Classification_Report: </span><span class="ch">\n</span><span class="st">"</span>,classification_report(y_test,y_pred_log))</span>
+<span id="cb28-367"><a href="#cb28-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-368"><a href="#cb28-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-369"><a href="#cb28-369" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-370"><a href="#cb28-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-371"><a href="#cb28-371" aria-hidden="true" tabindex="-1"></a><span class="al">![Confusion Matrix (src: &lt;https://www.datacamp.com/tutorial/precision-recall-curve-tutorial&gt;)](pr1.png)</span>{fig-alt="Confusion Matrix"}</span>
+<span id="cb28-372"><a href="#cb28-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-375"><a href="#cb28-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-376"><a href="#cb28-376" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, y_pred_log)<span class="op">;</span></span>
+<span id="cb28-377"><a href="#cb28-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-378"><a href="#cb28-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-381"><a href="#cb28-381" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-382"><a href="#cb28-382" aria-hidden="true" tabindex="-1"></a>knn_probs <span class="op">=</span> knn.predict_proba(X_test)</span>
+<span id="cb28-383"><a href="#cb28-383" aria-hidden="true" tabindex="-1"></a>knn_probs <span class="op">=</span> knn_probs[:, <span class="dv">1</span>]</span>
+<span id="cb28-384"><a href="#cb28-384" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, roc_auc_score</span>
+<span id="cb28-385"><a href="#cb28-385" aria-hidden="true" tabindex="-1"></a>rf_auc <span class="op">=</span> roc_auc_score(y_test, knn_probs)</span>
+<span id="cb28-386"><a href="#cb28-386" aria-hidden="true" tabindex="-1"></a>rf_fpr, rf_tpr, _ <span class="op">=</span> roc_curve(y_test, knn_probs)</span>
+<span id="cb28-387"><a href="#cb28-387" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-388"><a href="#cb28-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-391"><a href="#cb28-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-392"><a href="#cb28-392" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb28-393"><a href="#cb28-393" aria-hidden="true" tabindex="-1"></a>plt.plot(rf_fpr, rf_tpr, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'AUC = </span><span class="sc">%0.3f</span><span class="st">'</span> <span class="op">%</span> rf_auc)</span>
+<span id="cb28-394"><a href="#cb28-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-395"><a href="#cb28-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-396"><a href="#cb28-396" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ROC Plot'</span>)</span>
+<span id="cb28-397"><a href="#cb28-397" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb28-398"><a href="#cb28-398" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb28-399"><a href="#cb28-399" aria-hidden="true" tabindex="-1"></a>plt.legend()  </span>
+<span id="cb28-400"><a href="#cb28-400" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb28-401"><a href="#cb28-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-402"><a href="#cb28-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-403"><a href="#cb28-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-406"><a href="#cb28-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb28-407"><a href="#cb28-407" aria-hidden="true" tabindex="-1"></a>precision, recall, thresholds <span class="op">=</span> precision_recall_curve(y_test, knn_probs)</span>
+<span id="cb28-408"><a href="#cb28-408" aria-hidden="true" tabindex="-1"></a>plt.fill_between(recall, precision)</span>
+<span id="cb28-409"><a href="#cb28-409" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Precision"</span>)</span>
+<span id="cb28-410"><a href="#cb28-410" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Recall"</span>)</span>
+<span id="cb28-411"><a href="#cb28-411" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Precision-Recall curve"</span>)<span class="op">;</span></span>
+<span id="cb28-412"><a href="#cb28-412" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/tpriya14/blob/main/posts/classification/index.qmd" class="toc-action">View source</a></p></div></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/tpriya14/MLBlog/tree/gh-pages/posts/blob/main/posts/classification/index.qmd" class="toc-action">View source</a></p></div></div></div></div></footer></body></html>
