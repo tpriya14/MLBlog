@@ -4,7 +4,7 @@ project:
 
 website:
   title: "MLBlog"
-  repo-url: https://github.com/tpriya14/MLBlog
+  repo-url: https://github.com/tpriya14/MLBlog/blob/gh-pages/
   repo-actions: [source]
   navbar:
     right:
